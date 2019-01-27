@@ -1,5 +1,7 @@
 package com.prepcode.tree
 
+import kotlin.math.absoluteValue
+
 class MiscModerate {
 
     /* Question - Implement atoi which converts a string to an integer.*/
@@ -305,7 +307,7 @@ class MiscModerate {
                 l++
                 if (l >= r) {
                     r--
-                    l = i+1
+                    l = i + 1
                 }
             }
 
@@ -315,5 +317,231 @@ class MiscModerate {
 
     }
 
+    /*Question - divide without using division and multiplication operators  */
+    fun divide(dividend: Int, divisor: Int): Int {
+        if (divisor == 0) return Int.MAX_VALUE
+        var newDividend = dividend
+        var sign = 1
+        if ((divisor > 0 && dividend < 0) || (dividend > 0 && divisor < 0)) {
+            sign = -1
+        }
+        val newDivisor = divisor.absoluteValue
+        if (dividend == Int.MIN_VALUE) {
+            if (divisor == -1) {
+                return Int.MIN_VALUE
+            } else {
+                newDividend = Int.MAX_VALUE
+            }
+        }
+
+        if (newDividend < 0) {
+            newDividend *= -1
+        }
+        if (newDividend < newDivisor) return 0
+        var factor = 0
+        while (newDividend >= newDivisor) {
+            factor++
+            newDividend -= newDivisor
+        }
+
+        return factor * sign
+    }
+
+
+    /*Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. find the int target*/
+    fun search(target: Int): Int {
+        val arr = IntArray(1)
+        arr[0] = 4
+
+
+        if (arr.isEmpty()) return -1
+        if (arr.size == 1) {
+            return if (arr[0] == target) {
+                0
+            } else {
+                -1
+            }
+        }
+
+        // find the position of the pivot
+
+        var positionFromEnd = 0
+        val startPos = arr[0]
+
+        for (i: Int in arr.size - 1 downTo 0) {
+            if (startPos > arr[i]) {
+                positionFromEnd++
+            } else {
+                break
+            }
+        }
+
+        val pushFromStart = arr.size - positionFromEnd
+
+        // find the position of the the element in the rotated arr
+
+        var start = 0
+        var end = arr.size - 1
+
+        var currPos = -1
+
+        while (start < end) {
+            val startEle = arr[start]
+            val endEle = arr[end]
+
+            if (target >= startEle) {
+                if (target == startEle) {
+                    currPos = start
+                    break
+                }
+                start++
+            } else {
+                if (target == endEle) {
+                    currPos = end
+                    break
+                }
+                end--
+            }
+
+        }
+
+        if (currPos > -1) {
+            val originalPos = currPos - pushFromStart
+            if (originalPos < 0) {
+                return arr.size + originalPos
+            } else {
+                return originalPos
+            }
+        } else {
+            return currPos
+        }
+    }
+
+
+    fun testsearch(target: Int): Int {
+        val nums = IntArray(2)
+        nums[0] = 1
+        nums[1] = 3
+        if (nums.isEmpty()) return -1
+        if (nums.size == 1) {
+            return if (nums[0] == target) {
+                0
+            } else {
+                -1
+            }
+        }
+
+
+        // find the position of the the element in the rotated arr
+
+        var start = 0
+        var end = nums.size - 1
+
+        var currPos = -1
+
+        while (start < end) {
+            val startEle = nums[start]
+            val endEle = nums[end]
+
+
+            if (target == startEle) {
+                currPos = start
+                break
+            } else if (target == endEle) {
+                currPos = end
+                break
+            } else if (target >= startEle) {
+                start++
+            } else {
+                end--
+            }
+
+        }
+
+        return currPos
+    }
+
+
+    fun searchRange(nums: IntArray, target: Int): IntArray {
+        if (nums.isEmpty() || target < nums[0]) {
+            return intArrayOf(-1, -1)
+        }
+        if (nums.size == 1) {
+            if (nums[0] == target) {
+                return intArrayOf(0, 0)
+            } else {
+                return intArrayOf(-1, -1)
+            }
+        }
+
+        var left = 0
+        var right = nums.size - 1
+
+        var leftFound = -1
+        var rightFound = -1
+
+        while (left <= right) {
+            val leftEle = nums[left]
+            val rightEle = nums[right]
+
+            if (leftEle == target) {
+                leftFound = left
+                right = left
+                while (right + 1 < nums.size && (nums[right + 1] == leftEle)) {
+                    right++
+                }
+                return intArrayOf(leftFound, right)
+            }
+            if (rightEle == target) {
+                rightFound = right
+                left = right
+
+                while (left - 1 > 0 && (nums[left - 1] == rightEle)) {
+                    left--
+                }
+                return intArrayOf(left, rightFound)
+            }
+            left++
+            right--
+        }
+
+        return intArrayOf(leftFound, rightFound)
+    }
+
+
+    /*Important question - check the logic to navigate using '/' and '%' results
+    * also shows how to navigate between a 2d array */
+    fun isValidSudoku(board: Array<CharArray>): Boolean {
+        var rowCheck = false
+        var columnCheck = false
+        var cubeCheck = false
+        for (i: Int in 0..8) {
+            rowCheck = isValid(board, i, i, 0, 8)
+            columnCheck = isValid(board, 0, 8, i, i)
+            cubeCheck = isValid(board, i / 3 * 3, i / 3 * 3 + 2, i % 3 * 3, i % 3 * 3 + 2)
+
+        }
+
+
+        return rowCheck && columnCheck && cubeCheck
+    }
+
+    private fun isValid(board: Array<CharArray>, xStart: Int, xEnd: Int, yStart: Int, yEnd: Int): Boolean {
+        val hashSet = mutableSetOf<Char>()
+
+        for (x: Int in xStart..xEnd) {
+            for (y: Int in yStart..yEnd) {
+
+                if (board[x][y] == '.' || hashSet.add(board[x][y])) {
+                    continue
+                } else {
+                    return false
+                }
+            }
+        }
+
+        return true
+
+    }
 
 }
