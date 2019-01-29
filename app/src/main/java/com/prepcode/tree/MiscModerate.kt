@@ -544,4 +544,106 @@ class MiscModerate {
 
     }
 
+
+    /*Question - Given a collection of distinct integers, return all possible permutations. */
+    fun permute(nums: IntArray) {
+        /* val resList = mutableListOf<List<Int>>()
+         calculatePermutations(resList, nums)
+         return resList*/
+        permuteTest(0, nums)
+
+    }
+
+    private fun calculatePermutations(resList: MutableList<List<Int>>, nums: IntArray) {
+
+        for (i: Int in 0 until nums.size) {
+            var start = i
+            while ((start < nums.size)) {
+                val temp = nums[i]
+                nums[i] = nums[start]
+                nums[start] = temp
+                resList.add(nums.toList())
+                start++
+            }
+        }
+
+    }
+
+
+    fun permuteTest(start: Int, input: IntArray) {
+        if (start == input.size) {
+            //System.out.println(input);
+            for (x in input) {
+                print(x)
+            }
+            println("")
+            return
+        }
+        for (i in start until input.size) {
+            // swapping
+            val temp = input[i]
+            input[i] = input[start]
+            input[start] = temp
+            // swap(input[i], input[start]);
+
+            permuteTest(start + 1, input)
+            // swap(input[i],input[start]);
+
+            val temp2 = input[i]
+            input[i] = input[start]
+            input[start] = temp2
+        }
+    }
+
+
+    /*Question - Given a 2D board and a word, find if the word exists in the grid*/
+
+    fun exist(board: Array<CharArray>, word: String): Boolean {
+
+        if (board.isEmpty()) return false
+        if (word.isEmpty()) return true
+        val xLength = board.size
+        val yLength = board[0].size
+        val resArray = Array(xLength) { BooleanArray(yLength) }
+
+        for (x: Int in 0 until xLength) {
+            for (y: Int in 0 until yLength) {
+                return checkLogic(board, resArray, word.toCharArray(), x, y, 0)
+            }
+        }
+
+        return false
+    }
+
+    private fun checkLogic(
+        board: Array<CharArray>,
+        resArr: Array<BooleanArray>,
+        charArrayToSearch: CharArray,
+        startX: Int,
+        startY: Int,
+        wordPos: Int
+    ): Boolean {
+
+
+        if (wordPos == charArrayToSearch.size ) {
+            return true
+        }
+        if (startX >= 0 && startY >= 0 && startX < resArr.size && startY < resArr[0].size && board[startX][startY] == charArrayToSearch[wordPos]) {
+
+            if (checkLogic(board, resArr, charArrayToSearch, startX, startY + 1, wordPos + 1)) {
+                return true
+            } else if (checkLogic(board, resArr, charArrayToSearch, startX + 1, startY, wordPos + 1)) {
+                return true
+
+            } else if (checkLogic(board, resArr, charArrayToSearch, startX, startY - 1, wordPos + 1)) {
+                return true
+            } else {
+                return checkLogic(board, resArr, charArrayToSearch, startX - 1, startY, wordPos + 1)
+            }
+        } else {
+            return false
+        }
+
+    }
+
 }

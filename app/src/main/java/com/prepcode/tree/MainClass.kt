@@ -5,22 +5,24 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val sudoku = Array(9) { CharArray(9) { '.' } }
-        sudoku[0][0] = '5'
-        sudoku[0][1] = '3'
-        sudoku[0][4] = '7'
-        sudoku[1][0] = '6'
-        sudoku[3][0] = '8'
-        sudoku[4][0] = '4'
-        sudoku[5][0] = '7'
-        sudoku[2][1] = '9'
-        sudoku[6][1] = '6'
-        sudoku[1][3] = '1'
+        println(MiscModerate().exist(get2DArray(), "ABEE"))
 
+    }
 
-        MiscModerate().isValidSudoku(sudoku)
+    // Helpers
+    private fun get2DArray(): Array<CharArray> {
+        val sudoku = Array(3) { CharArray(3) }
+        sudoku[0][0] = 'A'
+        sudoku[0][1] = 'B'
+        sudoku[0][2] = 'C'
+        sudoku[1][0] = 'F'
+        sudoku[1][1] = 'E'
+        sudoku[1][2] = 'D'
+        sudoku[2][0] = 'G'
+        sudoku[2][1] = 'H'
+        sudoku[2][2] = 'I'
 
-
+        return sudoku
     }
 
 
