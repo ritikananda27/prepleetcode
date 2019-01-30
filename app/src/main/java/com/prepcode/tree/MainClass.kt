@@ -5,7 +5,8 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        println(MiscModerate().exist(get2DArray(), "ABEE"))
+        val test = MiscEasy().firstBadVersion(2)
+        println(test)
 
     }
 
