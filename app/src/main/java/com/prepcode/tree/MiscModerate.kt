@@ -630,6 +630,8 @@ class MiscModerate {
         if (wordPos == charArrayToSearch.size) {
             return true
         }
+
+        // ever position is responsible to recursively check if its consecutive in any direction has the word as part of children
         if (startX >= 0 && startY >= 0 && startX < resArr.size && startY < resArr[0].size && !resArr[startX][startY] && board[startX][startY] == charArrayToSearch[wordPos]) {
 
             resArr[startX][startY] = true
