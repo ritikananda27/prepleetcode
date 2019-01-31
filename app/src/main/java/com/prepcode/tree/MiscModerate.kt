@@ -608,7 +608,9 @@ class MiscModerate {
 
         for (x: Int in 0 until xLength) {
             for (y: Int in 0 until yLength) {
-                return checkLogic(board, resArray, word.toCharArray(), x, y, 0)
+                if (checkLogic(board, resArray, word.toCharArray(), x, y, 0)) {
+                    return true
+                }
             }
         }
 
@@ -625,11 +627,12 @@ class MiscModerate {
     ): Boolean {
 
 
-        if (wordPos == charArrayToSearch.size ) {
+        if (wordPos == charArrayToSearch.size) {
             return true
         }
-        if (startX >= 0 && startY >= 0 && startX < resArr.size && startY < resArr[0].size && board[startX][startY] == charArrayToSearch[wordPos]) {
+        if (startX >= 0 && startY >= 0 && startX < resArr.size && startY < resArr[0].size && !resArr[startX][startY] && board[startX][startY] == charArrayToSearch[wordPos]) {
 
+            resArr[startX][startY] = true
             if (checkLogic(board, resArr, charArrayToSearch, startX, startY + 1, wordPos + 1)) {
                 return true
             } else if (checkLogic(board, resArr, charArrayToSearch, startX + 1, startY, wordPos + 1)) {
@@ -637,13 +640,16 @@ class MiscModerate {
 
             } else if (checkLogic(board, resArr, charArrayToSearch, startX, startY - 1, wordPos + 1)) {
                 return true
+            } else if (checkLogic(board, resArr, charArrayToSearch, startX - 1, startY, wordPos + 1)) {
+                return true
             } else {
-                return checkLogic(board, resArr, charArrayToSearch, startX - 1, startY, wordPos + 1)
+                resArr[startX][startY] = false
             }
         } else {
             return false
         }
 
+        return false
     }
 
 }
