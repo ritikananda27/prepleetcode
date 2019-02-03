@@ -5,14 +5,18 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val test = MiscEasy().firstBadVersion(2)
+        val test = MiscModerate().subsets(intArrayOf( 1,2,3,4))
         println(test)
 
     }
 
+
+
+
+
     // Helpers
     private fun get2DArray(): Array<CharArray> {
-        val sudoku = Array(3) { CharArray(3) }
+        /*val sudoku = Array(3) { CharArray(3) }
         sudoku[0][0] = 'A'
         sudoku[0][1] = 'B'
         sudoku[0][2] = 'C'
@@ -23,7 +27,17 @@ object MainClass {
         sudoku[2][1] = 'H'
         sudoku[2][2] = 'I'
 
-        return sudoku
+        return sudoku*/
+
+
+        val test = Array(1) { CharArray(2) }
+
+        test[0][0] = 'a'
+        test[0][1] = 'b'
+
+        return test
+
+
     }
 
 

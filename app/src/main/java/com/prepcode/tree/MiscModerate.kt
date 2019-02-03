@@ -1,5 +1,6 @@
 package com.prepcode.tree
 
+import java.util.*
 import kotlin.math.absoluteValue
 
 class MiscModerate {
@@ -652,6 +653,26 @@ class MiscModerate {
         }
 
         return false
+    }
+
+
+    // Combinations and Permutations
+
+
+    fun subsets(nums: IntArray): List<List<Int>> {
+        val list: MutableList<List<Int>> = ArrayList()
+        Arrays.sort(nums)
+        backtrack(list, ArrayList(), nums, 0)
+        return list
+    }
+
+    private fun backtrack(list: MutableList<List<Int>>, tempList: MutableList<Int>, nums: IntArray, start: Int) {
+        list.add(ArrayList(tempList))
+        for (i in start until nums.size) {
+            tempList.add(nums[i])
+            backtrack(list, tempList, nums, i + 1)
+            tempList.removeAt(tempList.size - 1)
+        }
     }
 
 }
