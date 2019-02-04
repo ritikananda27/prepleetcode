@@ -1,7 +1,9 @@
 package com.prepcode.tree
 
+import java.io.*
 import java.util.*
 import kotlin.math.absoluteValue
+
 
 class MiscModerate {
 
@@ -675,4 +677,74 @@ class MiscModerate {
         }
     }
 
+
+    /* Reading a File using various Readers and writing to files   */
+
+    fun readFromAFileUsingBufferedReader() {
+        val file = File("/Users/rnanda/Desktop/sample.txt")
+        val br = BufferedReader(FileReader(file));
+
+        val lineNumberList = mutableListOf<Int>()
+
+        var lineNumber = 0
+        var line = br.readLine()
+        while (line != null) {
+            lineNumber++
+            if (line.contains("Text")) {
+                lineNumberList.add(lineNumber)
+            }
+            line = br.readLine()
+        }
+
+        println(lineNumberList)
+    }
+
+    fun readFromAFileUsingFileReader() {
+        val file = File("/Users/rnanda/Desktop/sample.txt")
+        val fr = FileInputStream(file)
+
+        val sb = java.lang.StringBuilder()
+        var read = fr.read()
+        while (read != -1) {
+            sb.append(read.toChar())
+            read = fr.read()
+        }
+
+        println(sb.toString())
+
+    }
+
+
+    fun readFileUsingScanner() {
+        val file = File("/Users/rnanda/Desktop/sample.txt")
+        val scanner = Scanner(file)
+
+        while (scanner.hasNextLine()) {
+            println(scanner.nextLine())
+        }
+    }
+
+
+    fun writeToTextFile(text: String) {
+        val out = BufferedWriter(FileWriter("/Users/rnanda/Desktop/sample1.txt"))
+        out.write(text)
+        out.newLine()
+        out.close()
+    }
+
+
+    fun readFromFileWriteToAnother() {
+        val file = File("/Users/rnanda/Desktop/sample.txt")
+        val br = BufferedReader(FileReader(file));
+
+        val sb = java.lang.StringBuilder()
+        var line = br.readLine()
+        while (line != null) {
+            sb.append(line)
+            sb.append('\n')
+            line = br.readLine()
+
+        }
+        writeToTextFile(sb.toString())
+    }
 }

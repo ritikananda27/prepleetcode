@@ -5,13 +5,9 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val test = MiscModerate().subsets(intArrayOf( 1,2,3,4))
-        println(test)
+        MiscModerate().readFromAFileUsingFileReader()
 
     }
-
-
-
 
 
     // Helpers
