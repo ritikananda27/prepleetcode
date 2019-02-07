@@ -1,6 +1,7 @@
 package com.prepcode.tree;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TreeJava {
 
@@ -56,6 +57,31 @@ public class TreeJava {
             convertStringToTree(root.getLeft(), list);
             convertStringToTree(root.getRight(), list);
         }
+
+    }
+
+
+    /* Take eack element, form a root node and then set left n right on that node recursively */
+    public MutableNode deserializeTestInOrder(List<Integer> valueList) {
+        if (valueList.size() == 0) return null;
+        return deserializeTreeImpl(valueList);
+    }
+
+    MutableNode deserializeTreeImpl(List list) {
+
+        if (list.size() == 0) return null;
+
+        int val = (int) list.get(0);
+        list.remove(0);
+        if (val == -1) {
+            return null;
+        }
+
+        MutableNode root = new MutableNode(val, null, null);
+        root.setLeft(deserializeTreeImpl(list));
+        root.setRight(deserializeTreeImpl(list));
+
+        return root;
 
     }
 

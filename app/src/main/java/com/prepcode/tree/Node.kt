@@ -4,7 +4,7 @@ class Node(val value: Int, val left: Node?, val right: Node?) {
 
 }
 
-class MutableNode(val value: Int, var left: MutableNode?, var right: MutableNode?) {
+class MutableNode(val value: Int, var left: MutableNode?=null, var right: MutableNode?=null) {
 
 }
 

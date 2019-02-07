@@ -747,4 +747,153 @@ class MiscModerate {
         }
         writeToTextFile(sb.toString())
     }
+
+
+    /*Sorting */
+    fun sortColors(nums: IntArray) {
+
+        if (nums.size < 2) {
+            return
+        }
+
+        var p1 = 0
+        var p2 = nums.size - 1
+        var i = 0
+
+        while (i <= p2) {
+            if (nums[i] == 0) {
+                nums[i] = nums[p1]
+                nums[p1] = 0
+                p1++
+                i++
+            } else if (nums[i] == 2) {
+                nums[i] = nums[p2]
+                nums[p2] = 2
+                p2--
+            } else {
+                i++
+            }
+        }
+    }
+
+
+    /*A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+    The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+    How many possible unique paths are there*/
+
+
+    fun uniquePath(m: Int, n: Int): Int {
+
+        if (m == 1 || n == 1) {
+            return 1
+        }
+
+        return uniquePath(m - 1, n) + uniquePath(m, n - 1)
+    }
+    /*Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right which minimizes the sum of all numbers along its path.*/
+
+    fun minPathSum(grid: Array<IntArray>): Int {
+        val m = grid.size
+        val n = grid[0].size
+        return minCost(grid, m - 1, n - 1)
+    }
+
+    private fun minCost(grid: Array<IntArray>, m: Int, n: Int): Int {
+
+        if (n < 0 || m < 0)
+            return Int.MAX_VALUE;
+        if (m == 0 && n == 0) {
+            return grid[m][n]
+        }
+
+        return grid[m][n] + Math.min(minCost(grid, m - 1, n), minCost(grid, m, n - 1))
+    }
+
+
+    /*Question - Given an array of strings, group anagrams together.*/
+    fun groupAnagrams(strs: Array<String>): List<List<String>> {
+        val resList: MutableList<List<String>> = mutableListOf()
+        if (strs.isEmpty()) {
+            return resList
+        }
+
+        if (strs.size == 1) {
+            resList.add(listOf(strs[0]))
+            return resList
+        }
+
+        val testList = strs.toMutableList()
+
+        while (testList.size > 1) {
+            val subject = testList[0]
+            val childRes = mutableListOf(subject)
+
+            for (i: Int in 1 until testList.size) {
+                if (ifStringsAreAnagrams(subject, testList[i])) {
+                    childRes.add(testList[i])
+                }
+            }
+            resList.add(childRes)
+            testList.removeAll(childRes)
+
+        }
+
+        if (testList.size > 0) {
+            resList.add(listOf(testList[0]))
+        }
+
+
+        return resList
+    }
+
+    private fun ifStringsAreAnagrams(s1: String, s2: String): Boolean {
+        val arr1 = s1.toMutableList()
+        val arr2 = s2.toMutableList()
+
+        var result = true
+
+        if (arr1.size == arr2.size) {
+
+            while (arr1.size > 0 && arr2.size > 0) {
+                val c = arr1[0]
+                if (arr2.contains(c)) {
+                    arr1.remove(c)
+                    arr2.remove(c)
+                } else {
+                    result = false
+                    return result
+                }
+
+            }
+
+        } else {
+            result = false
+        }
+
+        return result
+    }
+
+
+    /*Serialize and deserialize a binary tree */
+
+    fun serialize(root: Node?, array: MutableList<Int>) {
+
+        if (root == null) {
+            array.add(-1)
+            return
+        } else {
+            array.add(root.value)
+        }
+
+        serialize(root.left, array)
+        serialize(root.right, array)
+
+    }
+
+    fun deserializeTree(list: MutableList<Int>): MutableNode? {
+
+        return TreeJava().deserializeTestInOrder(list)
+
+    }
+
 }

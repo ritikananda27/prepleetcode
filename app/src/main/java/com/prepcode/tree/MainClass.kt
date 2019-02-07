@@ -4,8 +4,10 @@ object MainClass {
 
     @JvmStatic
     fun main(args: Array<String>) {
+        val testList = mutableListOf<Int>()
+        MiscModerate().serialize(Tree().getBasicTree(), testList)
+        MiscModerate().deserializeTree(testList)
 
-        MiscModerate().readFromAFileUsingFileReader()
 
     }
 
@@ -36,5 +38,27 @@ object MainClass {
 
     }
 
+    private fun get2DIntArray(): Array<IntArray> {
+        val arr = Array(3) { IntArray(3) }
+
+        arr[0][0] = 1
+        arr[0][1] = 1
+        arr[0][2] = 1
+        arr[1][0] = 1
+        arr[1][1] = 1
+        arr[1][2] = 1
+        arr[2][0] = 1
+        arr[2][1] = 1
+        arr[2][2] = 1
+
+        return arr
+    }
+
+
+    /*Points to remember */
+
+    /*1. when you are mutating a strincture like a list do not use a pointer to navigate as it will change unexpected. Always use the condition like while (list.size>0) as
+     the list should keep reducing in size
+     2. Think about sorting for problems like anagrams */
 
 }
