@@ -1,6 +1,7 @@
 package com.prepcode.tree
 
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.max
 
 
@@ -205,8 +206,52 @@ class MiscHard {
         if (test > 0) return test
         return findSmallestPositiveSuccessor(test)
     }
-}
 
+
+/*Question - Subarrays with K Different Integers*/
+
+
+    fun subarraysWithKDistinct(A: IntArray, K: Int): Int {
+
+        if (A.isEmpty()) return 0
+
+        val resList = ArrayList<List<Int>>()
+
+        var subArrLen = K
+
+        while (subArrLen < A.size) {
+
+            for (i: Int in 0..A.size - subArrLen) {
+
+                val subList = A.slice(i until i + subArrLen)
+                if (checkDistinctElesInList(subList, K)) {
+                    resList.add(subList)
+                }
+
+            }
+
+            subArrLen++
+
+        }
+
+
+        return resList.size
+
+    }
+
+    private fun checkDistinctElesInList(list: List<Int>, distinct: Int): Boolean {
+
+        var res = true
+
+        val sortedSet = list.toSortedSet()
+
+        if (sortedSet.size != distinct) {
+            res = false
+        }
+        return res
+    }
+
+}
 
 // Helper classes
 data class PointAnchor(val slope: Double, val anchorPoint: LinePoint)

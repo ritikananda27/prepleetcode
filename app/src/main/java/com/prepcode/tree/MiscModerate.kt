@@ -896,4 +896,94 @@ class MiscModerate {
 
     }
 
+
+    // Search an element in a 2d matrix
+    fun searchMatrix(matrix: Array<IntArray>, target: Int): Boolean {
+        if (matrix.isEmpty()) return false
+
+        val rows = matrix.size
+        val columns = matrix[0].size
+
+        val resMatrix: Array<BooleanArray> = Array(rows) { BooleanArray(columns) { true } }
+
+        for (i: Int in 0 until rows) {
+            for (j: Int in 0 until columns) {
+
+                val num = matrix[i][j]
+
+                if (num == target) {
+                    return true
+                } else if (!resMatrix[i][j]) {
+                    break
+                } else if (resMatrix[i][j] && num > target) {
+                    markMatrixFalse(resMatrix, j, columns - 1, i, rows - 1)
+                    break
+                }
+            }
+        }
+        return false
+    }
+
+    private fun markMatrixFalse(
+        resMatrix: Array<BooleanArray>,
+        colStart: Int,
+        maxCol: Int,
+        rowStart: Int,
+        maxRow: Int
+    ) {
+        for (i: Int in rowStart..maxRow) {
+            for (j: Int in colStart..maxCol) {
+                resMatrix[i][j] = false
+            }
+        }
+    }
+
+    fun searchMatrix2(matrix: Array<IntArray>, target: Int): Boolean {
+        if (matrix.isEmpty()) return false
+
+        var rowStart = 0
+        val rows = matrix.size - 1
+        var columns = matrix[0].size - 1
+
+        while (rowStart <= rows) {
+            for (j: Int in 0..columns) {
+
+                val num = matrix[rowStart][j]
+                if (num == target) {
+                    return true
+                } else if (num > target) {
+                    columns = j - 1
+                    break
+                }
+
+            }
+
+            rowStart++
+        }
+
+        return false
+    }
+
+
+    /* Question - Find Duplicate */
+    fun findDuplicate(nums: IntArray): Int {
+        if (nums.isEmpty()) return -1
+
+        if (nums.size < 2) {
+            return nums[0]
+        }
+        nums.sort()
+
+        for (i: Int in 0..nums.size - 2) {
+            val first = nums[i]
+            val second = nums[i + 1]
+            if (first == second) {
+                return nums[i]
+            }
+        }
+
+        return -1
+
+    }
+
 }

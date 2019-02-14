@@ -4,15 +4,14 @@ object MainClass {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        val testList = mutableListOf<Int>()
-        MiscModerate().serialize(Tree().getBasicTree(), testList)
-        MiscModerate().deserializeTree(testList)
 
-
+        val test = MiscHard().subarraysWithKDistinct(intArrayOf(1, 2, 1, 2, 3), 2)
+        println(test)
     }
 
 
     // Helpers
+
     private fun get2DArray(): Array<CharArray> {
         /*val sudoku = Array(3) { CharArray(3) }
         sudoku[0][0] = 'A'
@@ -39,17 +38,38 @@ object MainClass {
     }
 
     private fun get2DIntArray(): Array<IntArray> {
-        val arr = Array(3) { IntArray(3) }
+        val arr = Array(5) { IntArray(5) }
 
         arr[0][0] = 1
-        arr[0][1] = 1
-        arr[0][2] = 1
-        arr[1][0] = 1
-        arr[1][1] = 1
-        arr[1][2] = 1
-        arr[2][0] = 1
-        arr[2][1] = 1
-        arr[2][2] = 1
+        arr[0][1] = 4
+        arr[0][2] = 7
+        arr[0][3] = 11
+        arr[0][4] = 15
+
+        arr[1][0] = 2
+        arr[1][1] = 5
+        arr[1][2] = 8
+        arr[1][3] = 12
+        arr[1][4] = 19
+
+        arr[2][0] = 3
+        arr[2][1] = 6
+        arr[2][2] = 9
+        arr[2][3] = 16
+        arr[2][4] = 22
+
+        arr[3][0] = 10
+        arr[3][1] = 13
+        arr[3][2] = 14
+        arr[3][3] = 17
+        arr[3][4] = 24
+
+        arr[4][0] = 18
+        arr[4][1] = 21
+        arr[4][2] = 23
+        arr[4][3] = 26
+        arr[4][4] = 30
+
 
         return arr
     }
