@@ -5,8 +5,8 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val test = MiscHard().subarraysWithKDistinct(intArrayOf(1, 2, 1, 2, 3), 2)
-        println(test)
+    MiscModerate().combinePhoneNumber("23")
+
     }
 
 

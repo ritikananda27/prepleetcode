@@ -1,7 +1,7 @@
 package com.prepcode.tree
 
 import java.util.*
-import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.math.max
 
 
@@ -215,41 +215,32 @@ class MiscHard {
 
         if (A.isEmpty()) return 0
 
-        val resList = ArrayList<List<Int>>()
-
-        var subArrLen = K
-
-        while (subArrLen < A.size) {
-
-            for (i: Int in 0..A.size - subArrLen) {
-
-                val subList = A.slice(i until i + subArrLen)
-                if (checkDistinctElesInList(subList, K)) {
-                    resList.add(subList)
+        var result = 0
+        var map: HashMap<Int, Int>
+        for (i: Int in 0..A.size - K) {
+            map = HashMap()
+            map[A[i]] = 1
+            if (map.size == K) {
+                result++
+            }
+            for (j: Int in i + 1 until A.size) {
+                val value = A[j]
+                if (map.containsKey(value)) {
+                    map[value] = map[value]!!.plus(1)
+                } else {
+                    map[value] = 1
                 }
 
+                if (map.size == K) {
+                    result++
+                }
             }
 
-            subArrLen++
-
         }
-
-
-        return resList.size
+        return result
 
     }
 
-    private fun checkDistinctElesInList(list: List<Int>, distinct: Int): Boolean {
-
-        var res = true
-
-        val sortedSet = list.toSortedSet()
-
-        if (sortedSet.size != distinct) {
-            res = false
-        }
-        return res
-    }
 
 }
 

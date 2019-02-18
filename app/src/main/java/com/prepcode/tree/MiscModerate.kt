@@ -986,4 +986,57 @@ class MiscModerate {
 
     }
 
+
+    /*Question - combinations of phone numbers */
+
+    fun combinePhoneNumber(digit: String): List<String> {
+
+        if(digit.isEmpty()) return emptyList()
+
+        val map = HashMap<Char, CharArray>()
+        map['2'] = charArrayOf('a', 'b', 'c')
+        map['3'] = charArrayOf('d', 'e', 'f')
+        map['4'] = charArrayOf('g', 'h', 'i')
+        map['5'] = charArrayOf('j', 'k', 'l')
+        map['6'] = charArrayOf('m', 'n', 'o')
+        map['7'] = charArrayOf('p', 'q', 'r', 's')
+        map['8'] = charArrayOf('t', 'u', 'v')
+        map['9'] = charArrayOf('w', 'x', 'y', 'z')
+
+
+        val arr = Array(digit.length) { CharArray(3) }
+        var pointer = 0
+        digit.toCharArray().forEach {
+            arr[pointer] = map.get(it)!!
+            pointer++
+        }
+        val resList = mutableListOf<String>()
+        getCombinations(resList, StringBuilder(), arr, 0)
+
+        return resList
+
+    }
+
+    private fun getCombinations(
+        res: MutableList<String>, sb: StringBuilder,
+        arr: Array<CharArray>, pointer: Int
+    ) {
+
+        if (pointer == arr.size) {
+            res.add(sb.toString())
+            return
+        }
+
+        val subArr = arr[pointer]
+
+        for (i: Int in 0 until subArr.size) {
+            sb.append(subArr[i])
+            getCombinations(res, sb, arr, pointer + 1)
+            sb.deleteCharAt(sb.length - 1)
+
+        }
+
+
+    }
+
 }
