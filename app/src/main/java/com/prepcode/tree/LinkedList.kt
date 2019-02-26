@@ -64,7 +64,7 @@ class LinkedList {
         }
     }
 
-    /*Question - Remove Nth Node From End of List - keep a pointer n distance apart and remove when the second pointer is null - logic defined by me  */
+    /*Question - Remove Nth TreeNode From End of List - keep a pointer n distance apart and remove when the second pointer is null - logic defined by me  */
     fun removeNthFromEnd(head: ListNode?, n: Int): ListNode? {
         if (head == null) return head
 

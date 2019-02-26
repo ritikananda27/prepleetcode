@@ -1,9 +1,10 @@
 package com.prepcode.tree
 
 import java.util.*
+import kotlin.collections.HashMap
 
 class TreeQuestions {
-    fun printDFSRecursive(root: Node?) {
+    fun printDFSRecursive(root: TreeNode?) {
         if (root == null) {
             return
         }
@@ -13,11 +14,11 @@ class TreeQuestions {
 
     }
 
-    fun printBFSRecursive(root: Node?) {
+    fun printBFSRecursive(root: TreeNode?) {
         if (root == null) {
             return
         }
-        val queue = ArrayDeque<Node>()
+        val queue = ArrayDeque<TreeNode>()
         queue.add(root)
 
         while (!queue.isEmpty()) {
@@ -29,13 +30,13 @@ class TreeQuestions {
 
     }
 
-    fun isTreeComplete(root: Node?): Boolean {
+    fun isTreeComplete(root: TreeNode?): Boolean {
 
         if (root == null) {
             return false
         }
         var result = true
-        val queue = ArrayDeque<Node>()
+        val queue = ArrayDeque<TreeNode>()
         queue.add(root)
 
         while (!queue.isEmpty()) {
@@ -59,7 +60,7 @@ class TreeQuestions {
 
     }
 
-    fun printBinaryTreeInOrderTraversal(root: Node?) {
+    fun printBinaryTreeInOrderTraversal(root: TreeNode?) {
         if (root == null) {
             return
         }
@@ -72,13 +73,13 @@ class TreeQuestions {
         }
     }
 
-    fun putBinaryInOrderInList(root: Node?): List<Int> {
+    fun putBinaryInOrderInList(root: TreeNode?): List<Int> {
         val returnList = ArrayList<Int>()
         helperBinaryInOrderInList(root, returnList)
         return returnList
     }
 
-    fun helperBinaryInOrderInList(root: Node?, list: ArrayList<Int>) {
+    fun helperBinaryInOrderInList(root: TreeNode?, list: ArrayList<Int>) {
         if (root != null) {
             if (root.left != null) {
                 helperBinaryInOrderInList(root.left, list)
@@ -92,14 +93,14 @@ class TreeQuestions {
     }
 
 
-    fun zigzagTreeLevelOrder(root: Node?): List<List<Int>> {
+    fun zigzagTreeLevelOrder(root: TreeNode?): List<List<Int>> {
         val resList = ArrayList<ArrayList<Int>>()
         var childList = ArrayList<Int>()
         if (root === null) {
             resList
         }
-        val queue = LinkedList<Node?>()
-        val stack = Stack<Node?>()
+        val queue = LinkedList<TreeNode?>()
+        val stack = Stack<TreeNode?>()
         queue.add(root)
         queue.add(null)
         var normal = false;
@@ -136,31 +137,66 @@ class TreeQuestions {
     /*Serialize and Deserialize a tree - convert the tree nodes into string such that it can be recreated from it */
 
 
-    fun serializeTree(node: Node?): String? {
+    fun serializeTree(treeNode: TreeNode?): String? {
         val sb = StringBuilder()
-        if (node == null) return null
-        sb.append(node.value.toString() + ",")
-        putTreeIntoString(node, sb)
+        if (treeNode == null) return null
+        sb.append(treeNode.value.toString() + ",")
+        putTreeIntoString(treeNode, sb)
         return sb.toString().trimEnd(',')
     }
 
-    private fun putTreeIntoString(node: Node?, sb: StringBuilder) {
+    private fun putTreeIntoString(treeNode: TreeNode?, sb: StringBuilder) {
 
-        if (node == null) return
-        if (node.left != null) {
-            sb.append(node.left.value.toString() + ',')
+        if (treeNode == null) return
+        if (treeNode.left != null) {
+            sb.append(treeNode.left.value.toString() + ',')
         } else {
             sb.append("null" + ",")
         }
-        if (node.right != null) {
-            sb.append(node.right.value.toString() + ',')
+        if (treeNode.right != null) {
+            sb.append(treeNode.right.value.toString() + ',')
         } else {
             sb.append("null" + ",")
         }
-        putTreeIntoString(node.left, sb)
-        putTreeIntoString(node.right, sb)
+        putTreeIntoString(treeNode.left, sb)
+        putTreeIntoString(treeNode.right, sb)
 
     }
 
     // deserialization is in java file
+
+
+    /*Find all duplicate sub trees */
+
+    fun findDuplicateSubtrees(root: TreeNode?): List<TreeNode?> {
+        val map = HashMap<String, Int>()
+        val resList = mutableListOf<TreeNode>()
+        recordDuplicateSubTrees(map, resList, root)
+        return resList
+    }
+
+    private fun recordDuplicateSubTrees(
+        map: HashMap<String, Int>,
+        resList: MutableList<TreeNode>,
+        root: TreeNode?
+    ): String {
+
+        if (root == null) {
+            return "#"
+        }
+        val sb = java.lang.StringBuilder()
+        sb.append(recordDuplicateSubTrees(map, resList, root.left))
+        sb.append(root.value)
+        sb.append(recordDuplicateSubTrees(map, resList, root.right))
+
+
+        if (map.containsKey(sb.toString()) && map[sb.toString()] == 1) {
+            map[sb.toString()] = map[sb.toString()]!!.plus(1)
+            resList.add(root)
+        } else {
+            map[sb.toString()] = 1
+        }
+
+        return sb.toString()
+    }
 }

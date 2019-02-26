@@ -5,8 +5,25 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-    MiscModerate().combinePhoneNumber("23")
+        val inArr1 = intArrayOf(1, 2)
+        val intArr2 = intArrayOf(3)
+        val intArr3 = intArrayOf(4)
 
+        val intArr = arrayOf(inArr1, intArr2, intArr3)
+
+
+        val itr = Vector2D(intArr)
+
+        println(itr.next())
+        println(itr.next())
+        println(itr.next())
+
+        println(itr.hasNext())
+        println(itr.hasNext())
+
+        println(itr.next())
+        println(itr.hasNext())
+        
     }
 
 
@@ -82,3 +99,6 @@ object MainClass {
      2. Think about sorting for problems like anagrams */
 
 }
+
+/*Helper classes */
+

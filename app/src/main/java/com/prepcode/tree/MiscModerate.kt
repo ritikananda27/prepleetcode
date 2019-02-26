@@ -2,6 +2,8 @@ package com.prepcode.tree
 
 import java.io.*
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.math.absoluteValue
 
 
@@ -520,7 +522,7 @@ class MiscModerate {
         var cubeCheck = false
         for (i: Int in 0..8) {
             rowCheck = isValid(board, i, i, 0, 8)
-            columnCheck = isValid(board, 0, 8, i, i)
+            columnCheck = isValid(board, i, 8, i, i)
             cubeCheck = isValid(board, i / 3 * 3, i / 3 * 3 + 2, i % 3 * 3, i % 3 * 3 + 2)
 
         }
@@ -876,7 +878,7 @@ class MiscModerate {
 
     /*Serialize and deserialize a binary tree */
 
-    fun serialize(root: Node?, array: MutableList<Int>) {
+    fun serialize(root: TreeNode?, array: MutableList<Int>) {
 
         if (root == null) {
             array.add(-1)
@@ -991,7 +993,7 @@ class MiscModerate {
 
     fun combinePhoneNumber(digit: String): List<String> {
 
-        if(digit.isEmpty()) return emptyList()
+        if (digit.isEmpty()) return emptyList()
 
         val map = HashMap<Char, CharArray>()
         map['2'] = charArrayOf('a', 'b', 'c')
@@ -1039,4 +1041,70 @@ class MiscModerate {
 
     }
 
+    /*Dynamic Programming*/
+    /*Question - Buy and sell stock for max profit */
+
+    fun maxProfit(prices: IntArray): Int {
+        var maxProfit = 0
+        for (i: Int in 0 until prices.size) {
+            for (j: Int in i until prices.size) {
+
+                if (prices[j] > prices[i]) {
+                    val diff = prices[j] - prices[i]
+                    if (diff > maxProfit) {
+                        maxProfit = diff
+                    }
+                }
+            }
+        }
+
+        return maxProfit
+
+    }
+
+
+    /*Question - number of meeting rooms needed */
+    fun minMeetingRooms(intervals: Array<Interval>): Int {
+
+        if (intervals.size < 2) {
+            return intervals.size
+        }
+
+        intervals.sortBy { it.start }
+
+        val meetingRoomList = mutableListOf<Int>()
+
+        intervals.forEach {
+            if (meetingRoomList.size == 0) {
+                meetingRoomList.add(it.end)
+            } else {
+                var meetingRoomAvailable = false
+                for (i: Int in meetingRoomList.size - 1 downTo 0) {
+                    if (it.start >= meetingRoomList[i]) {
+                        meetingRoomAvailable = true
+                        meetingRoomList[i] = it.end
+                        break
+                    }
+                }
+                if (!meetingRoomAvailable) {
+                    meetingRoomList.add(it.end)
+                }
+            }
+        }
+
+
+        return meetingRoomList.size
+    }
+
+
+
+    fun wordBreak(s: String, wordDict: List<String>): Boolean {
+
+
+
+    }
 }
+
+
+
+class Interval constructor(var start: Int, var end: Int)
