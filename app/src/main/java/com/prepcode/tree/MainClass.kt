@@ -5,25 +5,9 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val inArr1 = intArrayOf(1, 2)
-        val intArr2 = intArrayOf(3)
-        val intArr3 = intArrayOf(4)
+        val test = MiscModerate().wordBreak("catsanddog", listOf("cat", "cats", "sand", "and", "dog"))
+        println(test)
 
-        val intArr = arrayOf(inArr1, intArr2, intArr3)
-
-
-        val itr = Vector2D(intArr)
-
-        println(itr.next())
-        println(itr.next())
-        println(itr.next())
-
-        println(itr.hasNext())
-        println(itr.hasNext())
-
-        println(itr.next())
-        println(itr.hasNext())
-        
     }
 
 

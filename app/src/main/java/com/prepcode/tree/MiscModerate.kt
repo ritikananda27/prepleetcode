@@ -1097,14 +1097,38 @@ class MiscModerate {
     }
 
 
-
+    /*Example of BFS - Queue leads to BFS. check example to see how nodes are formed using each index of strings https://leetcode.com/problems/word-break/solution/ */
     fun wordBreak(s: String, wordDict: List<String>): Boolean {
 
+        if (s.isEmpty()) return true
+        if (wordDict.isEmpty() && !s.isEmpty()) return false
 
+        val queue = java.util.LinkedList<Int>()
+        val arr = IntArray(s.length+1)
+        queue.add(0)
 
+        while (!queue.isEmpty()) {
+            val start = queue.poll()
+
+            if(arr[start]==0){
+                for (j: Int in start + 1..s.length) {
+                    val subStr = s.substring(start, j)
+                    if (wordDict.contains(subStr)) {
+                        queue.add(j)
+
+                        if(j==s.length){
+                            return true
+                        }
+                    }
+                }
+                arr[start]=1
+            }
+        }
+
+        return false
     }
-}
 
+}
 
 
 class Interval constructor(var start: Int, var end: Int)
