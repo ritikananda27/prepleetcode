@@ -149,12 +149,12 @@ class TreeQuestions {
 
         if (treeNode == null) return
         if (treeNode.left != null) {
-            sb.append(treeNode.left.value.toString() + ',')
+            sb.append(treeNode.left!!.value.toString() + ',')
         } else {
             sb.append("null" + ",")
         }
         if (treeNode.right != null) {
-            sb.append(treeNode.right.value.toString() + ',')
+            sb.append(treeNode.right!!.value.toString() + ',')
         } else {
             sb.append("null" + ",")
         }
@@ -199,4 +199,25 @@ class TreeQuestions {
 
         return sb.toString()
     }
+
+
+    fun mergeTrees(t1: TreeNode?, t2: TreeNode?): TreeNode? {
+        if (t1 == null && t2 == null) {
+            return null
+        }
+        if (t1 == null && t2 != null) {
+            return t2
+        }
+        if (t2 == null && t1 != null) {
+            return t1
+        }
+
+        val res = TreeNode(t1!!.value + t2!!.value)
+        res.left = mergeTrees(t1.left, t2.left)
+        res.right = mergeTrees(t1.right, t2.right)
+        return res
+    }
+
+
+
 }

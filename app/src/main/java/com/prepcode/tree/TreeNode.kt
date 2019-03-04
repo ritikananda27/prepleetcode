@@ -1,6 +1,6 @@
 package com.prepcode.tree
 
-class TreeNode(val value: Int, val left: TreeNode?, val right: TreeNode?) {
+class TreeNode(val value: Int, var left: TreeNode? = null, var right: TreeNode? = null) {
 
 }
 
@@ -26,8 +26,22 @@ class Tree() {
         n1 = TreeNode(1, n2, n3)
     }
 
-    fun getBasicTree(): TreeNode {
+    fun getBasicTree1(): TreeNode {
+        val n5 = TreeNode(5, null, null)
+        val n2 = TreeNode(2, null, null)
+        val n3 = TreeNode(3, n5, null)
+        n1 = TreeNode(1, n3, n2)
         return n1
+    }
+
+
+    fun getBasicTree2(): TreeNode {
+        val n4 = TreeNode(4, null, null)
+        val n7 = TreeNode(7, null, null)
+        val n3 = TreeNode(3, null, n7)
+        val n1 = TreeNode(1, null, n4)
+        val n2 = TreeNode(2, n1, n3)
+        return n2
     }
 
     fun getEmptyTree(treeNode: TreeNode): TreeNode {

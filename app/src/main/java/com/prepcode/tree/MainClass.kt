@@ -5,29 +5,13 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val tinyUrl =  TinyUrl()
-
-        val str1 = "ftp://174.123.452.34/directory/file"
-        val test = tinyUrl.encode(str1)
-        val test2 = tinyUrl.decode(test)
-
-        val test3 = str1==test2
-
-        println(test3)
-
-
-        val str3 = "https://google.com/"
-        val test4 = tinyUrl.encode(str3)
-        val test5 = tinyUrl.decode(test4)
-
-        val test6 = str3==test5
-
-        println(test6)
+        val test = LinkedList().reverseList(ListNodeHelper().getBasicList1())
+        println(test?.value)
 
     }
 
 
-    // Helpers'
+    // Helpers'T
 
     private fun get2DArray(): Array<CharArray> {
         /*val sudoku = Array(3) { CharArray(3) }

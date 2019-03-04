@@ -83,7 +83,7 @@ class LinkedList {
             return start.next
         }
 
-        while (curr?.next!=null){
+        while (curr?.next != null) {
             curr = curr?.next
             start = start?.next
         }
@@ -94,6 +94,23 @@ class LinkedList {
         return head
     }
 
+
+    fun reverseList(head: ListNode?): ListNode? {
+        val test = reverseListHelper(head, null)
+        return test
+    }
+
+    private fun reverseListHelper(head: ListNode?, newListHead: ListNode?): ListNode? {
+        var nhh = newListHead
+        var h = head
+        while (h != null) {
+            val next = h.next
+            h.next = nhh
+            nhh = h
+            h = next
+        }
+        return nhh
+    }
 
 
 }
