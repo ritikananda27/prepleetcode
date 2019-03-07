@@ -5,8 +5,10 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val test = LinkedList().reverseList(ListNodeHelper().getBasicList1())
-        println(test?.value)
+        val A= intArrayOf(12,28,46,32,50)
+        val B = intArrayOf(50,12,32,46,28)
+        val test = MiscModerate().anagramMappings(A,B)
+        println(test.size)
 
     }
 

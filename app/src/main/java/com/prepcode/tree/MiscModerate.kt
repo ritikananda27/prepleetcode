@@ -5,6 +5,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.math.absoluteValue
+import kotlin.math.max
 
 
 class MiscModerate {
@@ -623,12 +624,12 @@ class MiscModerate {
     }
 
     private fun checkLogic(
-        board: Array<CharArray>,
-        resArr: Array<BooleanArray>,
-        charArrayToSearch: CharArray,
-        startX: Int,
-        startY: Int,
-        wordPos: Int
+            board: Array<CharArray>,
+            resArr: Array<BooleanArray>,
+            charArrayToSearch: CharArray,
+            startX: Int,
+            startY: Int,
+            wordPos: Int
     ): Boolean {
 
 
@@ -878,7 +879,7 @@ class MiscModerate {
 
     /*Serialize and deserialize a binary tree */
 
-    fun serialize(root: TreeNode?, array: MutableList<Int>) {
+    fun serialize(root: TreeNodeT?, array: MutableList<Int>) {
 
         if (root == null) {
             array.add(-1)
@@ -927,11 +928,11 @@ class MiscModerate {
     }
 
     private fun markMatrixFalse(
-        resMatrix: Array<BooleanArray>,
-        colStart: Int,
-        maxCol: Int,
-        rowStart: Int,
-        maxRow: Int
+            resMatrix: Array<BooleanArray>,
+            colStart: Int,
+            maxCol: Int,
+            rowStart: Int,
+            maxRow: Int
     ) {
         for (i: Int in rowStart..maxRow) {
             for (j: Int in colStart..maxCol) {
@@ -1020,8 +1021,8 @@ class MiscModerate {
     }
 
     private fun getCombinations(
-        res: MutableList<String>, sb: StringBuilder,
-        arr: Array<CharArray>, pointer: Int
+            res: MutableList<String>, sb: StringBuilder,
+            arr: Array<CharArray>, pointer: Int
     ) {
 
         if (pointer == arr.size) {
@@ -1041,6 +1042,41 @@ class MiscModerate {
 
     }
 
+    fun maxProfit1(prices: IntArray): Int {
+        var buyDay = 0
+        var sellDay = 0
+        var maxProfit =0
+
+        for (i: Int in 0..prices.size) {
+            buyDay =i
+            var tempSellDay =i+1
+
+            while (tempSellDay<prices.size){
+                val tempProfit = prices[tempSellDay]-prices[buyDay]
+                if(tempProfit>maxProfit){
+                    maxProfit = tempProfit
+                    sellDay = tempSellDay
+                }
+
+                tempSellDay++
+            }
+
+        }
+
+        return maxProfit
+    }
+
+
+    fun anagramMappings(A: IntArray, B: IntArray): IntArray {
+        if(A.size!=B.size) return IntArray(0)
+        val resArr = IntArray(A.size)
+        for (i:Int in 0 until A.size){
+            val index = B.indexOf(A[i])
+            if(index==-1) return IntArray(0)
+            else resArr[i]= index
+        }
+        return resArr
+    }
     /*Dynamic Programming*/
     /*Question - Buy and sell stock for max profit */
 
@@ -1104,24 +1140,24 @@ class MiscModerate {
         if (wordDict.isEmpty() && !s.isEmpty()) return false
 
         val queue = java.util.LinkedList<Int>()
-        val arr = IntArray(s.length+1)
+        val arr = IntArray(s.length + 1)
         queue.add(0)
 
         while (!queue.isEmpty()) {
             val start = queue.poll()
 
-            if(arr[start]==0){
+            if (arr[start] == 0) {
                 for (j: Int in start + 1..s.length) {
                     val subStr = s.substring(start, j)
                     if (wordDict.contains(subStr)) {
                         queue.add(j)
 
-                        if(j==s.length){
+                        if (j == s.length) {
                             return true
                         }
                     }
                 }
-                arr[start]=1
+                arr[start] = 1
             }
         }
 

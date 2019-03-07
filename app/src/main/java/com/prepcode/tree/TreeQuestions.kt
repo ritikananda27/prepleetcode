@@ -4,7 +4,7 @@ import java.util.*
 import kotlin.collections.HashMap
 
 class TreeQuestions {
-    fun printDFSRecursive(root: TreeNode?) {
+    fun printDFSRecursive(root: TreeNodeT?) {
         if (root == null) {
             return
         }
@@ -14,11 +14,11 @@ class TreeQuestions {
 
     }
 
-    fun printBFSRecursive(root: TreeNode?) {
+    fun printBFSRecursive(root: TreeNodeT?) {
         if (root == null) {
             return
         }
-        val queue = ArrayDeque<TreeNode>()
+        val queue = ArrayDeque<TreeNodeT>()
         queue.add(root)
 
         while (!queue.isEmpty()) {
@@ -30,13 +30,13 @@ class TreeQuestions {
 
     }
 
-    fun isTreeComplete(root: TreeNode?): Boolean {
+    fun isTreeComplete(root: TreeNodeT?): Boolean {
 
         if (root == null) {
             return false
         }
         var result = true
-        val queue = ArrayDeque<TreeNode>()
+        val queue = ArrayDeque<TreeNodeT>()
         queue.add(root)
 
         while (!queue.isEmpty()) {
@@ -60,7 +60,7 @@ class TreeQuestions {
 
     }
 
-    fun printBinaryTreeInOrderTraversal(root: TreeNode?) {
+    fun printBinaryTreeInOrderTraversal(root: TreeNodeT?) {
         if (root == null) {
             return
         }
@@ -73,13 +73,13 @@ class TreeQuestions {
         }
     }
 
-    fun putBinaryInOrderInList(root: TreeNode?): List<Int> {
+    fun putBinaryInOrderInList(root: TreeNodeT?): List<Int> {
         val returnList = ArrayList<Int>()
         helperBinaryInOrderInList(root, returnList)
         return returnList
     }
 
-    fun helperBinaryInOrderInList(root: TreeNode?, list: ArrayList<Int>) {
+    fun helperBinaryInOrderInList(root: TreeNodeT?, list: ArrayList<Int>) {
         if (root != null) {
             if (root.left != null) {
                 helperBinaryInOrderInList(root.left, list)
@@ -93,14 +93,14 @@ class TreeQuestions {
     }
 
 
-    fun zigzagTreeLevelOrder(root: TreeNode?): List<List<Int>> {
+    fun zigzagTreeLevelOrder(root: TreeNodeT?): List<List<Int>> {
         val resList = ArrayList<ArrayList<Int>>()
         var childList = ArrayList<Int>()
         if (root === null) {
             resList
         }
-        val queue = LinkedList<TreeNode?>()
-        val stack = Stack<TreeNode?>()
+        val queue = LinkedList<TreeNodeT?>()
+        val stack = Stack<TreeNodeT?>()
         queue.add(root)
         queue.add(null)
         var normal = false;
@@ -137,29 +137,29 @@ class TreeQuestions {
     /*Serialize and Deserialize a tree - convert the tree nodes into string such that it can be recreated from it */
 
 
-    fun serializeTree(treeNode: TreeNode?): String? {
+    fun serializeTree(treeNodeT: TreeNodeT?): String? {
         val sb = StringBuilder()
-        if (treeNode == null) return null
-        sb.append(treeNode.value.toString() + ",")
-        putTreeIntoString(treeNode, sb)
+        if (treeNodeT == null) return null
+        sb.append(treeNodeT.value.toString() + ",")
+        putTreeIntoString(treeNodeT, sb)
         return sb.toString().trimEnd(',')
     }
 
-    private fun putTreeIntoString(treeNode: TreeNode?, sb: StringBuilder) {
+    private fun putTreeIntoString(treeNodeT: TreeNodeT?, sb: StringBuilder) {
 
-        if (treeNode == null) return
-        if (treeNode.left != null) {
-            sb.append(treeNode.left!!.value.toString() + ',')
+        if (treeNodeT == null) return
+        if (treeNodeT.left != null) {
+            sb.append(treeNodeT.left!!.value.toString() + ',')
         } else {
             sb.append("null" + ",")
         }
-        if (treeNode.right != null) {
-            sb.append(treeNode.right!!.value.toString() + ',')
+        if (treeNodeT.right != null) {
+            sb.append(treeNodeT.right!!.value.toString() + ',')
         } else {
             sb.append("null" + ",")
         }
-        putTreeIntoString(treeNode.left, sb)
-        putTreeIntoString(treeNode.right, sb)
+        putTreeIntoString(treeNodeT.left, sb)
+        putTreeIntoString(treeNodeT.right, sb)
 
     }
 
@@ -168,17 +168,17 @@ class TreeQuestions {
 
     /*Find all duplicate sub trees */
 
-    fun findDuplicateSubtrees(root: TreeNode?): List<TreeNode?> {
+    fun findDuplicateSubtrees(root: TreeNodeT?): List<TreeNodeT?> {
         val map = HashMap<String, Int>()
-        val resList = mutableListOf<TreeNode>()
+        val resList = mutableListOf<TreeNodeT>()
         recordDuplicateSubTrees(map, resList, root)
         return resList
     }
 
     private fun recordDuplicateSubTrees(
-        map: HashMap<String, Int>,
-        resList: MutableList<TreeNode>,
-        root: TreeNode?
+            map: HashMap<String, Int>,
+            resList: MutableList<TreeNodeT>,
+            root: TreeNodeT?
     ): String {
 
         if (root == null) {
@@ -201,7 +201,7 @@ class TreeQuestions {
     }
 
 
-    fun mergeTrees(t1: TreeNode?, t2: TreeNode?): TreeNode? {
+    fun mergeTrees(t1: TreeNodeT?, t2: TreeNodeT?): TreeNodeT? {
         if (t1 == null && t2 == null) {
             return null
         }
@@ -212,12 +212,97 @@ class TreeQuestions {
             return t1
         }
 
-        val res = TreeNode(t1!!.value + t2!!.value)
+        val res = TreeNodeT(t1!!.value + t2!!.value)
         res.left = mergeTrees(t1.left, t2.left)
         res.right = mergeTrees(t1.right, t2.right)
         return res
     }
 
+    fun levelOrder(root: TreeNodeT?): List<List<Int>> {
+        if (root == null) return emptyList()
+        val resList = mutableListOf<List<Int>>()
+        val queue = java.util.LinkedList<Pair<TreeNodeT, Int>>()
+        queue.offer(Pair(root, 0))
+        generateLevelOrder(queue, resList)
+        return resList
+    }
+
+    private fun generateLevelOrder(queue: java.util.Queue<Pair<TreeNodeT, Int>>, resList: MutableList<List<Int>>) {
+        var level = 0
+        var mutableChildList: MutableList<Int> = mutableListOf()
+        while (!queue.isEmpty()) {
+            val pair = queue.poll()
+            if (pair.second == level) {
+                mutableChildList.add(pair.first.value)
+            } else {
+                resList.add(mutableChildList)
+                mutableChildList = mutableListOf()
+                level = pair.second
+                mutableChildList.add(pair.first.value)
+            }
+            if (pair.first.left != null) {
+                queue.offer(Pair(pair.first.left!!, pair.second.plus(1)))
+            }
+
+            if (pair.first.right != null) {
+                queue.offer(Pair(pair.first.right!!, pair.second.plus(1)))
+            }
+
+        }
+
+        if (mutableChildList.size > 0) {
+            resList.add(mutableChildList)
+        }
+    }
+
+
+    fun rightSideView(root: TreeNodeT?): List<Int> {
+
+        if (root == null) return emptyList()
+        val queue = java.util.LinkedList<Pair<TreeNodeT, Int>>()
+        queue.add(Pair(root, 0))
+        var levelsCovered = mutableListOf<Int>()
+        val resList = mutableListOf<Int>()
+
+        while (!queue.isEmpty()) {
+            val pair = queue.poll()
+            if (!levelsCovered.contains(pair.second)) {
+                resList.add(pair.first.value)
+                levelsCovered.add(pair.second)
+            }
+            val node = pair.first
+            if (node.right != null) {
+                queue.add(Pair(node.right!!, pair.second.plus(1)))
+            }
+            if (node.left != null) {
+                queue.add(Pair(node.left!!, pair.second.plus(1)))
+            }
+        }
+
+        return resList
+    }
+
+    fun insertIntoBST(root: TreeNode?, `val`: Int): TreeNode? {
+        if (root == null) return TreeNode(`val`)
+
+        if (`val` <= root.`val`) {
+            if (root.left == null) {
+                root.left = TreeNode(`val`)
+                return root
+            } else {
+                insertIntoBST(root.left, `val`)
+            }
+        } else {
+            if (root.right == null) {
+                root.right = TreeNode(`val`)
+                return root
+            } else {
+                insertIntoBST(root.right, `val`)
+            }
+        }
+
+        return root
+    }
 
 
 }

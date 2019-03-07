@@ -64,7 +64,7 @@ class LinkedList {
         }
     }
 
-    /*Question - Remove Nth TreeNode From End of List - keep a pointer n distance apart and remove when the second pointer is null - logic defined by me  */
+    /*Question - Remove Nth TreeNodeT From End of List - keep a pointer n distance apart and remove when the second pointer is null - logic defined by me  */
     fun removeNthFromEnd(head: ListNode?, n: Int): ListNode? {
         if (head == null) return head
 
@@ -96,13 +96,8 @@ class LinkedList {
 
 
     fun reverseList(head: ListNode?): ListNode? {
-        val test = reverseListHelper(head, null)
-        return test
-    }
-
-    private fun reverseListHelper(head: ListNode?, newListHead: ListNode?): ListNode? {
-        var nhh = newListHead
-        var h = head
+        var nhh: ListNode? = null
+        var h: ListNode? = head
         while (h != null) {
             val next = h.next
             h.next = nhh
@@ -110,6 +105,17 @@ class LinkedList {
             h = next
         }
         return nhh
+    }
+
+    fun reverseListRecursive(head: ListNode?): ListNode? {
+        return reverseListRecursiveHelper(head, null)
+    }
+
+    private fun reverseListRecursiveHelper(oldListNode: ListNode?, newListNode: ListNode?): ListNode? {
+        if (oldListNode == null) return null
+        val next = oldListNode.next
+        oldListNode.next = newListNode
+        return reverseListRecursiveHelper(next, oldListNode)
     }
 
 
