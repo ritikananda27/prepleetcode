@@ -1,9 +1,12 @@
 package com.prepcode.tree;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class TreeJava {
-
 
 
     private Map<String, TreeMap<Integer, String>> map = new HashMap<>();
@@ -111,6 +114,73 @@ public class TreeJava {
     }
 
 
+    static String decrypt(String word) {
+        if (word.isEmpty()) return null;
+        StringBuffer sb = new StringBuffer();
+        int middle = 1;
 
+        for (int i = 0; i < word.length(); i++) {
+            int newVal = word.charAt(i);
+            newVal = newVal - middle;
+
+            while (newVal < 'a') {
+                newVal = newVal + 26;
+            }
+            sb.append((char) newVal);
+            middle = middle + newVal;
+        }
+        return sb.toString();
+
+    }
+
+    /*Serialize and Deserialize a tree */
+
+    public String serialize(TreeNode root) {
+        if (root == null) return "";
+        StringBuilder sb = new StringBuilder();
+        serializeImpl(sb, root);
+        return sb.toString();
+    }
+
+
+    private void serializeImpl(java.lang.StringBuilder sb, TreeNode head) {
+
+        if (head == null) {
+            sb.append("#");
+            return;
+        }
+        sb.append(head.getVal());
+        serializeImpl(sb, head.getLeft());
+        serializeImpl(sb, head.getRight());
+
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        if (data.isEmpty()) return null;
+        List dataList = new ArrayList();
+
+        for (int i = 0; i < data.length(); i++) {
+            dataList.add(data.charAt(i));
+        }
+
+        return desertializeImpl(0, dataList);
+    }
+
+    private TreeNode desertializeImpl(int pointer, List<Character> data) {
+        if (data.size() == 0) return null;
+        char val = data.get(0);
+        data.remove(0);
+        if (val == '#') {
+            return null;
+        }
+        TreeNode head = new TreeNode(Integer.parseInt(Character.toString(val)));
+        head.setLeft(desertializeImpl(pointer + 1, data));
+        head.setRight(desertializeImpl(pointer + 1, data));
+
+
+        return head;
+
+    }
 
 }

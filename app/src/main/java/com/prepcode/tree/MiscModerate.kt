@@ -5,7 +5,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.math.absoluteValue
-import kotlin.math.max
 
 
 class MiscModerate {
@@ -1045,15 +1044,15 @@ class MiscModerate {
     fun maxProfit1(prices: IntArray): Int {
         var buyDay = 0
         var sellDay = 0
-        var maxProfit =0
+        var maxProfit = 0
 
         for (i: Int in 0..prices.size) {
-            buyDay =i
-            var tempSellDay =i+1
+            buyDay = i
+            var tempSellDay = i + 1
 
-            while (tempSellDay<prices.size){
-                val tempProfit = prices[tempSellDay]-prices[buyDay]
-                if(tempProfit>maxProfit){
+            while (tempSellDay < prices.size) {
+                val tempProfit = prices[tempSellDay] - prices[buyDay]
+                if (tempProfit > maxProfit) {
                     maxProfit = tempProfit
                     sellDay = tempSellDay
                 }
@@ -1068,12 +1067,12 @@ class MiscModerate {
 
 
     fun anagramMappings(A: IntArray, B: IntArray): IntArray {
-        if(A.size!=B.size) return IntArray(0)
+        if (A.size != B.size) return IntArray(0)
         val resArr = IntArray(A.size)
-        for (i:Int in 0 until A.size){
+        for (i: Int in 0 until A.size) {
             val index = B.indexOf(A[i])
-            if(index==-1) return IntArray(0)
-            else resArr[i]= index
+            if (index == -1) return IntArray(0)
+            else resArr[i] = index
         }
         return resArr
     }
@@ -1164,7 +1163,57 @@ class MiscModerate {
         return false
     }
 
-}
+    fun removeDuplicateLetters(s: String?): String? {
+        if (s.isNullOrBlank()) return s
+        val charCountArr = IntArray(26)
+        val visitedArr = BooleanArray(26)
 
+        s!!.forEach {
+            val index = it - 'a'
+            charCountArr[index]++
+        }
+        val stack = java.util.Stack<Char>()
+
+        for (i: Int in 0 until s.length) {
+            val char = s[i]
+            charCountArr[char - 'a']--
+
+            if (stack.isEmpty()) {
+                stack.push(char)
+                visitedArr[char - 'a'] = true
+            } else if (!visitedArr[char - 'a']) {
+
+                if (char < stack.peek()) {
+                    while (!stack.isEmpty()) {
+                        val lastChar = stack.peek()
+                        if (char < lastChar && charCountArr[lastChar - 'a'] > 0) {
+                            stack.pop()
+                            visitedArr[lastChar - 'a'] = false
+                        } else {
+                            break
+                        }
+                    }
+                    stack.push(char)
+                    visitedArr[char - 'a'] = true
+
+                } else {
+                    stack.push(char)
+                    visitedArr[char - 'a'] = true
+                }
+            }
+
+        }
+
+        val sb = CharArray(stack.size)
+        var pos = sb.size - 1
+        while (!stack.isEmpty()) {
+            sb[pos] = (stack.pop())
+            pos--
+        }
+
+        return String(sb)
+    }
+
+}
 
 class Interval constructor(var start: Int, var end: Int)

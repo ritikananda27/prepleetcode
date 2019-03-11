@@ -5,10 +5,11 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val A= intArrayOf(12,28,46,32,50)
-        val B = intArrayOf(50,12,32,46,28)
-        val test = MiscModerate().anagramMappings(A,B)
-        println(test.size)
+
+        val test = TreeJava().serialize(Tree().getBST())
+        println(test)
+        val test2 = TreeJava().deserialize(test)
+        println(test2.`val`)
 
     }
 
