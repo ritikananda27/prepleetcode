@@ -2,6 +2,7 @@ package com.prepcode.tree
 
 import java.util.*
 import kotlin.collections.HashMap
+import kotlin.collections.HashSet
 import kotlin.math.max
 
 
@@ -53,8 +54,8 @@ class MiscHard {
 
 
     private fun addToMapIfNotPresent(
-        map: MutableMap<PointAnchor, MutableList<LinePoint>>, slope: Double, anchorPoint: PointAnchor,
-        nextPoint: LinePoint
+            map: MutableMap<PointAnchor, MutableList<LinePoint>>, slope: Double, anchorPoint: PointAnchor,
+            nextPoint: LinePoint
     ) {
         if (map.containsKey(anchorPoint)) {
             val list = map[anchorPoint]?.add(nextPoint)
@@ -239,6 +240,66 @@ class MiscHard {
         }
         return result
 
+    }
+
+    fun palindromePairs(words: Array<String>): List<List<Int>> {
+
+        val resList = mutableListOf<List<Int>>()
+
+        if (words.isEmpty()) return resList
+        for (i: Int in 0 until words.size) {
+            val test = words[i]
+            for (j: Int in i + 1 until words.size) {
+                val next = words[j]
+                if (isPalindrome(test + next)) {
+                    resList.add(listOf(i, j))
+                }
+                if (isPalindrome(next + test)) {
+                    resList.add(listOf(j, i))
+                }
+            }
+        }
+        return resList
+    }
+
+    fun isPalindrome(str: String): Boolean {
+        if (str.isEmpty()) return true
+        var left = 0
+        var right = str.length - 1
+        while (left < right) {
+            if (str[left] != str[right]) {
+                return false
+            }
+            left++
+            right--
+        }
+        return true
+    }
+
+    fun longestConsecutive(nums: IntArray): Int {
+        val set = HashSet<Int>()
+
+        for (n in nums) {
+            set.add(n)
+        }
+
+        var ans = 0
+
+        for (n in nums) {
+            if (!set.contains(n - 1)) {
+                var j = n
+
+                while (set.contains(j)) {
+                    j++
+                }
+                val test = j - n
+                if(test>ans){
+                    ans = test
+                }
+            }
+        }
+
+        return ans
     }
 
 

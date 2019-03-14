@@ -5,12 +5,8 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-
-        val test = TreeJava().serialize(Tree().getBST())
+        val test = MiscHard().longestConsecutive(intArrayOf(9, 1, 4, 7, 3, -1, 0, 5, 8, -1, 6))
         println(test)
-        val test2 = TreeJava().deserialize(test)
-        println(test2.`val`)
-
     }
 
 

@@ -183,4 +183,24 @@ public class TreeJava {
 
     }
 
+    public double myPow(double x, int n) {
+        int sign;
+        if (n < 0) {
+            sign =0;
+        } else {
+            sign =1;
+        }
+
+        double res = 1.0;
+        for (int count=0; count<n;count++) {
+            res *= x;
+        }
+
+        if (sign > 0) {
+            return res;
+        } else {
+            return 1 / res;
+        }
+    }
+
 }
