@@ -5,25 +5,7 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-
-        var capitals = hashMapOf<String, String>()
-        capitals.put("Nepal", "Kathmandu")
-        capitals.put("India", "New Delhi")
-        capitals.put("United States", "Washington")
-        capitals.put("England", "London")
-        capitals.put("Australia", "Canberra")
-
-        val result = capitals.toList().sortedBy { (_, value) -> value.length}.toMap()
-
-        for (entry in result) {
-            print("Key: " + entry.key)
-            println(" Value: " + entry.value)
-        }
-
-        /*"1s3 PSt"
-["step","steps","stripe","stepple"]*/
-
-        val test = MiscEasy().mostCommonWord("Bob hit a ball, the hit BALL flew far after it was hit", arrayOf("hit"))
+        val test = Recursive().addBinary("111","11")
         println(test)
     }
 
