@@ -5,8 +5,7 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val test = Recursive().addBinary("111","11")
-        println(test)
+
     }
 
 
