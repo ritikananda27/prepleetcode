@@ -4,8 +4,8 @@ object MainClass {
 
     @JvmStatic
     fun main(args: Array<String>) {
-
-
+        val test = Facebook().subsets(intArrayOf(1, 2, 3))
+        println(test)
     }
 
 

@@ -54,19 +54,38 @@ class Tree() {
         return treeNodeT
     }
 
-    fun getBST():TreeNode{
+    fun getBST(): TreeNode {
         val n4 = TreeNode(4)
         val n2 = TreeNode(2)
         val n7 = TreeNode(7)
         val n1 = TreeNode(1)
         val n3 = TreeNode(3)
 
-        n4.left= n2
+        n4.left = n2
         n4.right = n7
         n2.left = n1
         n2.right = n3
 
         return n4
+    }
+
+    fun getSymantecTree(): TreeNode {
+        val n4 = TreeNode(4)
+        val n2 = TreeNode(2)
+        val n22 = TreeNode(2)
+        val n1 = TreeNode(1)
+        val n3 = TreeNode(3)
+
+        n1.left = n2
+        n1.right = n22
+
+        n2.left = n3
+        n2.right = n4
+
+        n22.left = n4
+        n22.right = n3
+
+        return n1
     }
 
     fun getTreeNoeWithDuplicateSubTrees(): TreeNodeT {
