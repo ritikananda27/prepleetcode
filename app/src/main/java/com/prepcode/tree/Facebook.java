@@ -1,7 +1,11 @@
 package com.prepcode.tree;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 
 public class Facebook {
 
@@ -168,4 +172,140 @@ public class Facebook {
 
 
     }
+
+    class LRUCacheFb {
+
+        private Map<Integer, Integer> lruMap;
+        private Queue<Integer> lruQueue;
+        private int capacity;
+
+        public LRUCacheFb(int capacity) {
+            lruMap = new HashMap<>();
+            lruQueue = new LinkedList<>();
+            this.capacity = capacity;
+        }
+
+        public int get(int key) {
+            if (lruMap.containsKey(key)) {
+                refreshEntry(key);
+                return lruMap.get(key);
+            } else {
+                return -1;
+            }
+        }
+
+        public void put(int key, int value) {
+            if (lruMap.containsKey(key)) {
+                refreshEntry(key);
+                lruMap.put(key, value);
+            } else {
+                if (lruQueue.size() == capacity) {
+                    int valToRemove = lruQueue.peek();
+                    lruMap.remove(valToRemove);
+                    lruQueue.remove(valToRemove);
+                }
+                lruMap.put(key, value);
+                lruQueue.add(key);
+
+            }
+
+        }
+
+
+        private void refreshEntry(int key) {
+            lruQueue.remove(key);
+            lruQueue.add(key);
+        }
+    }
+
+
+    /*LRU cache in O(1) using HashTable and Double linked list*/
+
+    class BestLRU {
+
+        private Node head = null;
+        private Node tail = null;
+        private HashMap<Integer, Node> map;
+        private int capacity;
+
+        private class Node {
+            Node prev;
+            Node next;
+            int value;
+
+            Node(int value) {
+                this.value = value;
+            }
+
+
+        }
+
+        public BestLRU(int capacity) {
+            this.map = new HashMap<>();
+            this.capacity = capacity;
+        }
+
+
+        public int get(int key) {
+
+            if (!map.containsKey(key)) {
+                return -1;
+            }
+
+            Node n = map.get(key);
+            removeFromQueue(n);
+            setHead(n);
+
+            return n.value;
+
+        }
+
+        public void put(int key, int value) {
+
+            if (map.containsKey(key)) {
+                Node n = map.get(key);
+                n.value = value;
+                removeFromQueue(n);
+                setHead(n);
+            } else {
+                if (map.size() >= capacity) {
+                    removeFromQueue(tail);
+                }
+                Node n = new Node(value);
+                setHead(n);
+                map.put(key, n);
+            }
+        }
+
+        //set a node to be head
+        private void setHead(Node t) {
+            if (head != null) {
+                head.prev = t;
+            }
+            t.next = head;
+            t.prev = null;
+
+            head = t;
+
+            if (tail == null) {
+                tail = head;
+            }
+        }
+
+        private void removeFromQueue(Node node) {
+            if (node.next != null) {
+                node.next.prev = node.prev;
+            } else {
+                tail = node.prev;
+            }
+
+            if (node.prev != null) {
+                node.prev.next = node.next;
+            } else {
+                head = node.next;
+            }
+        }
+
+    }
+
 }
