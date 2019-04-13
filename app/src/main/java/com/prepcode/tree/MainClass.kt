@@ -1,20 +1,14 @@
 package com.prepcode.tree
 
-import com.prepcode.tree.facebook.Facebook
+import com.prepcode.tree.facebook.Codec
 
 object MainClass {
 
-
-
-    /*["LRUCache",     ,","get","get"]
-  ,[3],[4]]*/
-
     @JvmStatic
     fun main(args: Array<String>) {
-        val subsets  = Facebook().countSubstrings("aaa")
-
-        println(subsets)
-
+        val codec = Codec()
+        val t = codec.encode("http://example.com/#badge")
+        val d = codec.decode(t)
 
 
     }
