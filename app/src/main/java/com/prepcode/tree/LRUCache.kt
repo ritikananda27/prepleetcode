@@ -41,5 +41,133 @@ class LRUCache(private val capacity: Int) {
         queue.add(key)
     }
 
+   /* internal inner class LRUCacheFb(private val capacity: Integer) {
 
+        private val lruMap: MutableMap<Int, Int>
+        private val lruQueue: Queue<Int>
+
+        init {
+            lruMap = HashMap()
+            lruQueue = LinkedList()
+        }
+
+        operator fun get(key: Integer): Int {
+            if (lruMap.containsKey(key)) {
+                refreshEntry(key)
+                return lruMap[key]
+            } else {
+                return -1
+            }
+        }
+
+        fun put(key: Int, value: Int) {
+            if (lruMap.containsKey(key)) {
+                refreshEntry(key)
+                lruMap[key] = value
+            } else {
+                if (lruQueue.size == capacity) {
+                    val valToRemove = lruQueue.peek()
+                    lruMap.remove(valToRemove)
+                    lruQueue.remove(valToRemove)
+                }
+                lruMap[key] = value
+                lruQueue.add(key)
+
+            }
+
+        }
+
+
+        private fun refreshEntry(key: Int) {
+            lruQueue.remove(key)
+            lruQueue.add(key)
+        }
+    }
+
+
+    *//*LRU cache in O(1) using HashTable and Double linked list*//*
+
+    internal inner class BestLRU(private val capacity: Int) {
+
+        private var head: Node? = null
+        private var tail: Node? = null
+        private val map: HashMap<Int, Node>
+
+        private inner class Node internal constructor(internal var key: Int, internal var value: Int) {
+            internal var prev: Node? = null
+            internal var next: Node? = null
+
+
+        }
+
+        init {
+            this.map = HashMap()
+        }
+
+
+        operator fun get(key: Int): Int {
+
+            if (!map.containsKey(key)) {
+                return -1
+            }
+
+            val n = map[key]
+            removeFromQueue(n)
+            setHead(n)
+
+            return n.value
+
+        }
+
+        fun put(key: Int, value: Int) {
+
+            if (map.containsKey(key)) {
+                val n = map[key]
+                n.value = value
+                removeFromQueue(n)
+                setHead(n)
+            } else {
+                if (map.size >= capacity) {
+                    map.remove(tail!!.key)
+                    removeFromQueue(tail!!)
+
+                }
+                val n = Node(key, value)
+                setHead(n)
+                map[key] = n
+            }
+        }
+
+        //set a node to be head
+        private fun setHead(t: Node) {
+            if (head != null) {
+                head!!.prev = t
+            }
+            t.next = head
+            t.prev = null
+
+            head = t
+
+            if (tail == null) {
+                tail = head
+            }
+        }
+
+        private fun removeFromQueue(node: Node) {
+            if (node.next != null) {
+                node.next!!.prev = node.prev
+            } else {
+                tail = node.prev
+            }
+
+            if (node.prev != null) {
+                node.prev!!.next = node.next
+            } else {
+                head = node.next
+            }
+        }
+
+    }
+
+*/
 }

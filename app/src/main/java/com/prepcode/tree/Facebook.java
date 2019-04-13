@@ -1,11 +1,7 @@
 package com.prepcode.tree;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Queue;
 
 public class Facebook {
 
@@ -167,145 +163,50 @@ public class Facebook {
             child.add(nums[j]);
             subsetsImpl(nums, resList, child, j + 1);
             child.remove(child.size() - 1);
-
         }
+
+    }
+
+
+    public int countSubstrings(String s) {
+        List<String> resList = new ArrayList<>();
+        for (int i = 0; i < s.length(); i++) {
+            palidromicBacktrack(s, i, i, resList, new StringBuilder());
+        }
+        return resList.size();
+
+    }
+
+    private void palidromicBacktrack(String s, int start, int end, List<String> resList, StringBuilder sb) {
+        if (end == s.length()) {
+            return;
+        }
+        sb.append(s.charAt(end));
+        palidromicBacktrack(s, start, end + 1, resList, sb);
+
+        if (isPalindrome(s, start, end)) {
+            resList.add(sb.toString());
+        }
+
+        sb.deleteCharAt(sb.length() - 1);
+    }
+
+    private boolean isPalindrome(String s, int start, int end) {
+
+        if (start == end) return true;
+
+        while (start < end) {
+            if (s.charAt(start) != s.charAt(end)) {
+                return false;
+            }
+            start++;
+            end--;
+        }
+
+        return true;
 
 
     }
 
-    class LRUCacheFb {
-
-        private Map<Integer, Integer> lruMap;
-        private Queue<Integer> lruQueue;
-        private int capacity;
-
-        public LRUCacheFb(int capacity) {
-            lruMap = new HashMap<>();
-            lruQueue = new LinkedList<>();
-            this.capacity = capacity;
-        }
-
-        public int get(int key) {
-            if (lruMap.containsKey(key)) {
-                refreshEntry(key);
-                return lruMap.get(key);
-            } else {
-                return -1;
-            }
-        }
-
-        public void put(int key, int value) {
-            if (lruMap.containsKey(key)) {
-                refreshEntry(key);
-                lruMap.put(key, value);
-            } else {
-                if (lruQueue.size() == capacity) {
-                    int valToRemove = lruQueue.peek();
-                    lruMap.remove(valToRemove);
-                    lruQueue.remove(valToRemove);
-                }
-                lruMap.put(key, value);
-                lruQueue.add(key);
-
-            }
-
-        }
-
-
-        private void refreshEntry(int key) {
-            lruQueue.remove(key);
-            lruQueue.add(key);
-        }
-    }
-
-
-    /*LRU cache in O(1) using HashTable and Double linked list*/
-
-    class BestLRU {
-
-        private Node head = null;
-        private Node tail = null;
-        private HashMap<Integer, Node> map;
-        private int capacity;
-
-        private class Node {
-            Node prev;
-            Node next;
-            int value;
-
-            Node(int value) {
-                this.value = value;
-            }
-
-
-        }
-
-        public BestLRU(int capacity) {
-            this.map = new HashMap<>();
-            this.capacity = capacity;
-        }
-
-
-        public int get(int key) {
-
-            if (!map.containsKey(key)) {
-                return -1;
-            }
-
-            Node n = map.get(key);
-            removeFromQueue(n);
-            setHead(n);
-
-            return n.value;
-
-        }
-
-        public void put(int key, int value) {
-
-            if (map.containsKey(key)) {
-                Node n = map.get(key);
-                n.value = value;
-                removeFromQueue(n);
-                setHead(n);
-            } else {
-                if (map.size() >= capacity) {
-                    removeFromQueue(tail);
-                }
-                Node n = new Node(value);
-                setHead(n);
-                map.put(key, n);
-            }
-        }
-
-        //set a node to be head
-        private void setHead(Node t) {
-            if (head != null) {
-                head.prev = t;
-            }
-            t.next = head;
-            t.prev = null;
-
-            head = t;
-
-            if (tail == null) {
-                tail = head;
-            }
-        }
-
-        private void removeFromQueue(Node node) {
-            if (node.next != null) {
-                node.next.prev = node.prev;
-            } else {
-                tail = node.prev;
-            }
-
-            if (node.prev != null) {
-                node.prev.next = node.next;
-            } else {
-                head = node.next;
-            }
-        }
-
-    }
 
 }

@@ -2,25 +2,18 @@ package com.prepcode.tree
 
 object MainClass {
 
+
+
+    /*["LRUCache",     ,","get","get"]
+  ,[3],[4]]*/
+
     @JvmStatic
     fun main(args: Array<String>) {
-        val lru = Facebook().BestLRU(2)
+        val subsets  = Facebook().countSubstrings("aaa")
 
-        lru.put(1, 1)
-        lru.put(2, 2)
-        lru.put(1, 1)
+        println(subsets)
 
-        val one = lru.get(1)
-        println(" one {$one}")
 
-        val two = lru.get(2)
-        println(" two {$two}")
-
-        val three = lru.get(3)
-        println(" two {$three}")
-
-        val four = lru.get(4)
-        println(" two {$four}")
 
     }
 
