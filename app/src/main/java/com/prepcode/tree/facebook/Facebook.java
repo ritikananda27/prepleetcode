@@ -1,4 +1,7 @@
-package com.prepcode.tree;
+package com.prepcode.tree.facebook;
+
+import com.prepcode.tree.ListNode;
+import com.prepcode.tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
