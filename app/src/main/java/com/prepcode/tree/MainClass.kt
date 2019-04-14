@@ -1,16 +1,35 @@
 package com.prepcode.tree
 
+import android.os.Build
+import android.support.annotation.RequiresApi
 import com.prepcode.tree.facebook.Facebook
 
 object MainClass {
 
 
+    @RequiresApi(Build.VERSION_CODES.N)
     @JvmStatic
     fun main(args: Array<String>) {
 
         val fb = Facebook()
 
-        fb.threeSum(intArrayOf(3,0,-2,-1,1,2))
+        val points = Array(3) { IntArray(2) }
+        points[0] = intArrayOf(3, 3)
+        points[1] = intArrayOf(5, -1)
+        points[2] = intArrayOf(-2, 4)
+
+
+        val i1 = Facebook().Interval(9, 10)
+        val i2 = Facebook().Interval(4, 9)
+        val i3 = Facebook().Interval(4, 17)
+
+        val arr = arrayOf(i1, i2, i3)
+        // val i4 = Facebook().Interval(15, 18)
+
+
+        val artr = fb.productExceptSelf(intArrayOf(1, 2, -1, 4))
+
+        println(artr.size)
 
 
     }

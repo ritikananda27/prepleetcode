@@ -1,5 +1,7 @@
 package com.prepcode.tree.facebook;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import com.prepcode.tree.ListNode;
 import com.prepcode.tree.TreeNode;
 
@@ -333,5 +335,170 @@ public class Facebook {
         return new ArrayList<>(res);
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public List<Interval> merge(List<Interval> intervals) {
+        if (intervals.size() < 2) return intervals;
+        intervals.sort((o1, o2) -> o1.start - o2.start);
+        return mergeImpl(new ArrayList<>(intervals));
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private List<Interval> mergeImpl(ArrayList<Interval> intervals) {
+
+
+        List<Interval> mergedList = new LinkedList<>();
+        for (int i = 0; i < intervals.size(); i++) {
+            Interval inter = intervals.get(i);
+            if (mergedList.isEmpty()) {
+                mergedList.add(inter);
+            } else {
+                Interval lastMerged = ((LinkedList<Interval>) mergedList).getLast();
+                if (lastMerged.end >= inter.start) {
+                    if (lastMerged.end < inter.end) {
+                        Interval newMerged = new Interval(lastMerged.start, inter.end);
+                        ((LinkedList<Interval>) mergedList).removeLast();
+                        mergedList.add(newMerged);
+                    }
+
+                } else {
+                    mergedList.add(inter);
+                }
+            }
+        }
+        return mergedList;
+    }
+
+
+    public int[][] kClosest(int[][] points, int K) {
+
+        TreeMap<Integer, List<int[]>> pointDistanceMap = new TreeMap<>();
+
+        for (int i = 0; i < points.length; i++) {
+            int[] point = points[i];
+            Integer dist = (point[0] * point[0]) + (point[1] * point[1]);
+
+            if (pointDistanceMap.containsKey(dist)) {
+                pointDistanceMap.get(dist).add(point);
+            } else {
+                List<int[]> pointList = new ArrayList<>();
+                pointList.add(point);
+                pointDistanceMap.put(dist, pointList);
+            }
+        }
+
+        int[][] answer = new int[K][2];
+
+
+        int count = 0;
+
+        Iterator itr = pointDistanceMap.entrySet().iterator();
+        while (itr.hasNext()) {
+            Map.Entry entry = (Map.Entry) itr.next();
+            List<int[]> pList = (List) entry.getValue();
+            if (count < K) {
+                for (int i = 0; i < pList.size(); i++) {
+                    if (count < K) {
+                        answer[count] = pList.get(i);
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+            } else {
+                break;
+            }
+        }
+
+
+        return answer;
+
+
+    }
+
+    public int minMeetingRooms(Interval[] intervals) {
+
+        if (intervals.length < 2) return intervals.length;
+        Arrays.sort(intervals, (o1, o2) -> o1.start - o2.start);
+
+        List<java.util.LinkedList> totalRooms = new ArrayList<>();
+        java.util.LinkedList<Interval> room1 = new java.util.LinkedList();
+        room1.add(intervals[0]);
+        totalRooms.add(room1);
+
+        for (int i = 1; i < intervals.length; i++) {
+            Interval newMeeting = intervals[i];
+            boolean roomFound = false;
+            for (java.util.LinkedList<Interval> room : totalRooms) {
+                Interval lastMeeting = room.getLast();
+                if (newMeeting.start >= lastMeeting.end) {
+                    room.add(newMeeting);
+                    roomFound = true;
+                    break;
+                }
+            }
+            if (!roomFound) {
+                java.util.LinkedList newRoom = new java.util.LinkedList();
+                newRoom.add(newMeeting);
+                totalRooms.add(newRoom);
+            }
+        }
+
+        return totalRooms.size();
+    }
+
+
+    public class Interval {
+        int start;
+        int end;
+
+        Interval() {
+            start = 0;
+            end = 0;
+        }
+
+        public Interval(int s, int e) {
+            start = s;
+            end = e;
+        }
+    }
+
+    public int[] productExceptSelf(int[] nums) {
+        int product = 1;
+        int[] res = new int[nums.length];
+        List<Integer> indexesOfZeros = new ArrayList<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == 0) {
+                indexesOfZeros.add(i);
+            } else {
+                product = product * nums[i];
+            }
+        }
+
+        if (indexesOfZeros.size() > 1) {
+            for (int i = 0; i < res.length; i++) {
+                res[i] = 0;
+            }
+        } else if (indexesOfZeros.size() == 1) {
+            for (int j = 0; j < res.length; j++) {
+                if (indexesOfZeros.contains(j)) {
+                    res[j] = product;
+                }else{
+                    res[j]= 0;
+                }
+            }
+        } else {
+            for (int j = 0; j < res.length; j++) {
+                int val = product / nums[j];
+                res[j] = val;
+
+            }
+        }
+
+
+        return res;
+    }
 
 }
