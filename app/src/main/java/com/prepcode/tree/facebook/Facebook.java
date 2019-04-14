@@ -3,8 +3,7 @@ package com.prepcode.tree.facebook;
 import com.prepcode.tree.ListNode;
 import com.prepcode.tree.TreeNode;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Facebook {
 
@@ -209,6 +208,129 @@ public class Facebook {
         return true;
 
 
+    }
+
+
+    public String multiply(String num1, String num2) {
+
+        if (num1.equals("0") || num2.equals("0")) return "0";
+        int s2 = num2.length() - 1;
+        List<String> resList = new ArrayList<>();
+
+        while (s2 >= 0) {
+            char c = num2.charAt(s2);
+            int i = Character.getNumericValue(c);
+
+            int res = i * Integer.parseInt(num1);
+
+            StringBuilder sb = new StringBuilder();
+            for (int j = s2; j < num2.length() - 1; j++) {
+                sb.append("0");
+
+            }
+            resList.add(res + sb.toString());
+            s2--;
+        }
+
+        int res = 0;
+
+        for (int i = 0; i < resList.size(); i++) {
+            int a = Integer.parseInt(resList.get(i));
+            res = res + a;
+        }
+
+        return Integer.toString(res);
+    }
+
+    public int numIslands(char[][] grid) {
+
+        int count = 0;
+
+        for (int row = 0; row < grid.length; row++) {
+            for (int col = 0; col < grid[row].length; col++) {
+                char c = grid[row][col];
+                if (c == '1') {
+                    count++;
+                    determinIslandSize(grid, row, col);
+                }
+            }
+        }
+
+
+        return count;
+
+    }
+
+    private void determinLargestIslandSize(char[][] grid, int row, int col) {
+
+        if (row < 0 || col < 0 || row >= grid.length || col >= grid[0].length || grid[row][col] == '0') {
+            return;
+        }
+
+        grid[row][col] = '0';
+
+        for (int i = row - 1; i <= row + 1; i++) {
+            for (int j = col - 1; j <= col + 1; j++) {
+                if (i != row || j != col) {
+                    determinLargestIslandSize(grid, i, j);
+                }
+            }
+        }
+
+    }
+
+
+    private void determinIslandSize(char[][] grid, int row, int col) {
+
+        if (row < 0 || col < 0 || row >= grid.length || col >= grid[0].length || grid[row][col] == '0') {
+            return;
+        }
+
+        grid[row][col] = '0';
+
+        determinIslandSize(grid, row - 1, col);
+        determinIslandSize(grid, row + 1, col);
+        determinIslandSize(grid, row, col - 1);
+        determinIslandSize(grid, row, col + 1);
+
+
+    }
+
+
+    public List<List<Integer>> threeSum(int[] nums) {
+
+        if (nums.length < 3) return Collections.emptyList();
+        Set<List<Integer>> res = new HashSet<>();
+
+        int sum = 0;
+        Arrays.sort(nums);
+
+        for (int i = 0; i < nums.length; i++) {
+
+            int remain = sum - nums[i];
+            int j = i + 1;
+            int k = nums.length - 1;
+            while (j < k) {
+                int ss = nums[j] + nums[k];
+                if (ss == remain) {
+                    List<Integer> r = new ArrayList<>();
+                    r.add(nums[i]);
+                    r.add(nums[j]);
+                    r.add(nums[k]);
+                    res.add(r);
+                    j++;
+                    k--;
+                } else if (ss > remain) {
+                    k--;
+                } else {
+                    j++;
+                }
+
+            }
+
+        }
+
+        return new ArrayList<>(res);
     }
 
 

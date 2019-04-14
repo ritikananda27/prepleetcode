@@ -1,14 +1,16 @@
 package com.prepcode.tree
 
-import com.prepcode.tree.facebook.Codec
+import com.prepcode.tree.facebook.Facebook
 
 object MainClass {
 
+
     @JvmStatic
     fun main(args: Array<String>) {
-        val codec = Codec()
-        val t = codec.encode("http://example.com/#badge")
-        val d = codec.decode(t)
+
+        val fb = Facebook()
+
+        fb.threeSum(intArrayOf(3,0,-2,-1,1,2))
 
 
     }
