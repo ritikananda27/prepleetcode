@@ -2,7 +2,7 @@ package com.prepcode.tree
 
 import android.os.Build
 import android.support.annotation.RequiresApi
-import com.prepcode.tree.facebook.Facebook
+import com.prepcode.tree.airbnb.Airbnb
 
 object MainClass {
 
@@ -11,25 +11,12 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val fb = Facebook()
+        val airbnb = Airbnb()
 
-        val points = Array(3) { IntArray(2) }
-        points[0] = intArrayOf(3, 3)
-        points[1] = intArrayOf(5, -1)
-        points[2] = intArrayOf(-2, 4)
+        val root = Airbnb().Tree().basicTree1
+        val t = airbnb . lowestCommonAncestor (root, Airbnb().TreeNode(19), Airbnb().TreeNode(25))
 
-
-        val i1 = Facebook().Interval(9, 10)
-        val i2 = Facebook().Interval(4, 9)
-        val i3 = Facebook().Interval(4, 17)
-
-        val arr = arrayOf(i1, i2, i3)
-        // val i4 = Facebook().Interval(15, 18)
-
-
-        val artr = fb.productExceptSelf(intArrayOf(1, 2, -1, 4))
-
-        println(artr.size)
+        println(t)
 
 
     }
