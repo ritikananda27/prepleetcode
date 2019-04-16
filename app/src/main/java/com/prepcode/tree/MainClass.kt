@@ -2,7 +2,6 @@ package com.prepcode.tree
 
 import android.os.Build
 import android.support.annotation.RequiresApi
-import com.prepcode.tree.airbnb.Airbnb
 
 object MainClass {
 
@@ -11,12 +10,8 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val airbnb = Airbnb()
-
-        val root = Airbnb().Tree().basicTree1
-        val t = airbnb . lowestCommonAncestor (root, Airbnb().TreeNode(19), Airbnb().TreeNode(25))
-
-        println(t)
+        val tree = Tree().getMinHeap()
+        val heap = HeapQuestions().insertIntoMinHeap(tree, TreeNode(5))
 
 
     }

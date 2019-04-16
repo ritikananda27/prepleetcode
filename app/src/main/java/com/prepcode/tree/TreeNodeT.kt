@@ -54,6 +54,28 @@ class Tree() {
         return treeNodeT
     }
 
+
+    fun getMinHeap() :TreeNode {
+
+        val n1 = TreeNode(1)
+        val n3 = TreeNode(3)
+        val n8 = TreeNode(8)
+        val n9 = TreeNode(9)
+        val n4 = TreeNode(4)
+        val n12 = TreeNode(12)
+        val n14 = TreeNode(14)
+
+        n1.left = n4
+        n1.right = n3
+        n3.left = n8
+        n3.right = n9
+       /* n4.left = n12
+        n4.right = n14*/
+
+        return n1
+
+    }
+
     fun getBST(): TreeNode {
         val n4 = TreeNode(4)
         val n2 = TreeNode(2)
