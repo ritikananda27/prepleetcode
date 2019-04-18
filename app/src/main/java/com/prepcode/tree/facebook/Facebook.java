@@ -485,8 +485,8 @@ public class Facebook {
             for (int j = 0; j < res.length; j++) {
                 if (indexesOfZeros.contains(j)) {
                     res[j] = product;
-                }else{
-                    res[j]= 0;
+                } else {
+                    res[j] = 0;
                 }
             }
         } else {
@@ -499,6 +499,71 @@ public class Facebook {
 
 
         return res;
+    }
+
+
+    /*["hot","dot","dog","lot","log","cog"]
+     */
+
+    // hit -> cog
+
+    public int findLadders(String beginWord, String endWord, List<String> wordList) {
+
+        if (!wordList.contains(endWord)) return -1;
+        ArrayDeque<String> queue = new ArrayDeque<>();
+        Set<String> visited = new HashSet<>();
+
+        queue.add(beginWord);
+        queue.add("#");
+        visited.add(beginWord);
+
+        int minPath = 1;
+
+        while (!queue.isEmpty()) {
+            String en = queue.poll();
+            if (en.equals(endWord)) {
+                break;
+            }
+            if (en.equals("#")) {
+                minPath++;
+                queue.add("#");
+                continue;
+            }
+
+            List<String> children = getChildren(en, wordList);
+            if (children.size() > 0) {
+                for (String s : children) {
+                    if (visited.add(s)) {
+                        queue.add(s);
+                    }
+                }
+            }
+
+        }
+
+        return minPath;
+    }
+
+    private List<String> getChildren(String word, List<String> wordList) {
+        List<String> children = new ArrayList<>();
+        char[] res = word.toCharArray();
+        for (String s : wordList) {
+            int diff = 0;
+            char[] arr = s.toCharArray();
+            for (int i = 0; i < arr.length; i++) {
+                if (res[i] != arr[i]) {
+                    diff++;
+                }
+                if (diff > 1) {
+                    break;
+                }
+            }
+            if (diff == 1) {
+                children.add(s);
+            }
+
+        }
+        return children;
     }
 
 }

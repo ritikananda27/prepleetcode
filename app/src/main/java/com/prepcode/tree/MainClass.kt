@@ -2,6 +2,7 @@ package com.prepcode.tree
 
 import android.os.Build
 import android.support.annotation.RequiresApi
+import com.prepcode.tree.facebook.Facebook
 
 object MainClass {
 
@@ -10,40 +11,9 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val q = InfiniteQueue<Int>()
-        q.enqueue(1)
-        q.enqueue(2)
-        q.enqueue(3)
-        q.enqueue(4)
-        q.enqueue(5)
-        q.enqueue(6)
-        q.enqueue(7)
-        q.enqueue(8)
-
-        println( q.dequeue())
-        println( q.dequeue())
-        println( q.dequeue())
-
-
-        q.enqueue(9)
-        q.enqueue(10)
-        q.enqueue(11)
-        q.enqueue(12)
-        q.enqueue(13)
-
-        println( q.dequeue())
-        println( q.dequeue())
-        println( q.dequeue())
-
-        println( q.dequeue())
-        println( q.dequeue())
-        println( q.dequeue())
-
-        println( q.dequeue())
-        println( q.dequeue())
-        println( q.dequeue())
-
-
+        val fb = Facebook()
+        val num = fb.findLadders("hit", "cog", listOf("hot", "dot", "dog", "lot", "log", "cog"))
+        println(num)
 
     }
 
