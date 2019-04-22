@@ -12,8 +12,18 @@ object MainClass {
     fun main(args: Array<String>) {
 
         val fb = Facebook()
-        val num = fb.findLadders("hit", "cog", listOf("hot", "dot", "dog", "lot", "log", "cog"))
-        println(num)
+        val bstItr = fb.BSTIterator(fb.Tree().bst)
+        bstItr.hasNext()
+
+        println(bstItr.next())
+        println(bstItr.next())
+        println(bstItr.hasNext())
+        println(bstItr.next())
+        println(bstItr.hasNext())
+        println(bstItr.next())
+        println(bstItr.hasNext())
+        println(bstItr.next())
+        println(bstItr.hasNext())
 
     }
 

@@ -3,7 +3,6 @@ package com.prepcode.tree.facebook;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import com.prepcode.tree.ListNode;
-import com.prepcode.tree.TreeNode;
 
 import java.util.*;
 
@@ -114,7 +113,7 @@ public class Facebook {
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
 
-        if (p.getVal() < q.getVal()) {
+        if (p.val < q.val) {
             return lowestCommonAncestorImpl(root, p, q);
         } else {
             return lowestCommonAncestorImpl(root, q, p);
@@ -139,14 +138,14 @@ public class Facebook {
 
     private TreeNode lowestCommonAncestorImpl(TreeNode root, TreeNode small, TreeNode large) {
 
-        if (small.getVal() <= root.getVal() && root.getVal() <= large.getVal()) {
+        if (small.val <= root.val && root.val <= large.val) {
             return root;
         }
 
-        if (large.getVal() < root.getVal()) {
-            return lowestCommonAncestorImpl(root.getLeft(), small, large);
+        if (large.val < root.val) {
+            return lowestCommonAncestorImpl(root.left, small, large);
         } else {
-            return lowestCommonAncestorImpl(root.getRight(), small, large);
+            return lowestCommonAncestorImpl(root.right, small, large);
         }
 
 
@@ -544,6 +543,118 @@ public class Facebook {
         return minPath;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public List<List<String>> findLadders2(String beginWord, String endWord, List<String> wordList) {
+        List<List<String>> res = new ArrayList<>();
+        if (!wordList.contains(endWord) || beginWord.equals(endWord)) return res;
+        Set<String> visited = new HashSet<>();
+        Queue<LadderNode> queue = new ArrayDeque<>();
+
+        LadderNode begin = new LadderNode(beginWord);
+
+        visited.add(beginWord);
+        queue.add(begin);
+
+        buildChildLadderGraph(endWord, queue, visited, wordList);
+        addAllPaths(res, begin, new ArrayList(), endWord);
+
+        if (res.size() > 1) {
+            res.sort((o1, o2) -> o1.size() - o2.size());
+
+            int neededSize = res.get(0).size();
+            List<List<String>> newRes = new ArrayList<>();
+
+            for (int i = 0; i < res.size(); i++) {
+                if (res.get(i).size() == neededSize) {
+                    newRes.add(res.get(i));
+                } else {
+                    break;
+                }
+            }
+
+            res = newRes;
+
+        }
+
+
+        return res;
+
+    }
+
+    private void addAllPaths(List<List<String>> res, LadderNode root, List<String> temp, String end) {
+
+        if (root.node.equals(end)) {
+            temp.add(root.node);
+            res.add(new ArrayList<>(temp));
+            return;
+        }
+
+        temp.add(root.node);
+        List<LadderNode> children = root.children;
+        if (children.size() > 0) {
+            for (LadderNode n : children) {
+                addAllPaths(res, n, temp, end);
+                temp.remove(n.node);
+            }
+        }
+    }
+
+    private void buildChildLadderGraph(String end, Queue<LadderNode> queue, Set<String> visited, List<String> dict) {
+
+        while (!queue.isEmpty()) {
+            LadderNode node = queue.poll();
+            if (node != null) {
+                List<String> uncheckedChildren = getChildNodes(dict, node.node);
+                for (String s : uncheckedChildren) {
+                    if (visited.add(s) || s.equals(end)) {
+                        LadderNode n = new LadderNode(s);
+                        node.children.add(n);
+                        queue.add(n);
+                    }
+                }
+            }
+
+        }
+
+
+    }
+
+    private class LadderNode {
+        String node;
+        List<LadderNode> children = new ArrayList<>();
+
+        LadderNode(String val) {
+            this.node = val;
+        }
+    }
+
+    private List<String> getChildNodes(List<String> dict, String word) {
+        List<String> children = new ArrayList<>();
+        char[] find = word.toCharArray();
+
+        for (String s : dict) {
+
+            int diff = 0;
+            char[] sChar = s.toCharArray();
+            for (int i = 0; i < sChar.length; i++) {
+                if (sChar[i] != find[i]) {
+                    diff++;
+                }
+                if (diff > 1) {
+                    break;
+                }
+            }
+
+            if (diff == 1) {
+                children.add(s);
+            }
+
+        }
+
+        return children;
+
+    }
+
     private List<String> getChildren(String word, List<String> wordList) {
         List<String> children = new ArrayList<>();
         char[] res = word.toCharArray();
@@ -564,6 +675,97 @@ public class Facebook {
 
         }
         return children;
+    }
+
+    public List<String> generateParenthesis(int n) {
+        List<String> ans = new ArrayList();
+        backtrack(ans, "", 0, 0, n);
+        return ans;
+    }
+
+    private void backtrack(List<String> ans, String cur, int open, int close, int max) {
+
+        if (cur.length() == 2 * max) {
+            ans.add(cur);
+            return;
+        }
+
+        if (open < max) {
+            backtrack(ans, cur + "(", open + 1, close, max);
+        }
+        if (close < open) {
+            backtrack(ans, cur + ")", open, close + 1, max);
+        }
+
+    }
+
+    public class BSTIterator {
+
+        LinkedList<Integer> list = new LinkedList<>();
+
+        public BSTIterator(TreeNode root) {
+            generateIteratorList(root);
+
+        }
+
+        private void generateIteratorList(TreeNode root) {
+            if (root == null) {
+                return;
+            }
+
+            generateIteratorList(root.left);
+            list.add(root.val);
+            generateIteratorList(root.right);
+
+        }
+
+        /**
+         * @return the next smallest number
+         */
+        public int next() {
+            if (list.size() > 0) {
+                int val = list.poll();
+                return val;
+            } else {
+                return -1;
+            }
+
+        }
+
+        /**
+         * @return whether we have a next smallest number
+         */
+        public boolean hasNext() {
+            return list.size() > 0;
+        }
+    }
+
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+
+    }
+
+    public class Tree {
+        public TreeNode getBST() {
+            TreeNode n4 = new TreeNode(4);
+            TreeNode n2 = new TreeNode(2);
+            TreeNode n7 = new TreeNode(7);
+            TreeNode n1 = new TreeNode(1);
+            TreeNode n3 = new TreeNode(3);
+
+            n4.left = n2;
+            n4.right = n7;
+            n2.left = n1;
+            n2.right = n3;
+
+            return n4;
+        }
     }
 
 }
