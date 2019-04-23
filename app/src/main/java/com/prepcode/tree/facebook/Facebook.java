@@ -768,4 +768,55 @@ public class Facebook {
         }
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public ListNode mergeKLists(ListNode[] lists) {
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((o1, o2) -> o1.getValue() - o2.getValue());
+        for (int i = 0; i < lists.length; i++) {
+            pq.add(lists[i]);
+        }
+
+        ListNode head = null;
+        ListNode tail = null;
+
+        while (!pq.isEmpty()) {
+            ListNode node = pq.poll();
+            if (node.getNext() != null) {
+                pq.add(node.getNext());
+            }
+
+            if (head == null) {
+                head = node;
+                tail = node;
+            } else {
+                tail.setNext(node);
+                tail = tail.getNext();
+            }
+        }
+
+        return head;
+    }
+
+
+    public int subarraySum(int[] nums, int k) {
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            int sum = nums[i];
+            if (sum == k) {
+                count++;
+            } else {
+                for (int j = i + 1; j < nums.length; j++) {
+                    sum = sum + nums[j];
+                    if (sum == k) {
+                        count++;
+                        break;
+                    } else if (sum > k) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return count;
+    }
 }

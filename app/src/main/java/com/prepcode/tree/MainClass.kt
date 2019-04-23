@@ -12,18 +12,8 @@ object MainClass {
     fun main(args: Array<String>) {
 
         val fb = Facebook()
-        val bstItr = fb.BSTIterator(fb.Tree().bst)
-        bstItr.hasNext()
+        val bstItr = fb.subarraySum(intArrayOf(28, 54, 7, -70, 22, 65, -6), 100)
 
-        println(bstItr.next())
-        println(bstItr.next())
-        println(bstItr.hasNext())
-        println(bstItr.next())
-        println(bstItr.hasNext())
-        println(bstItr.next())
-        println(bstItr.hasNext())
-        println(bstItr.next())
-        println(bstItr.hasNext())
 
     }
 
