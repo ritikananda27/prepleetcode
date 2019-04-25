@@ -12,7 +12,8 @@ object MainClass {
     fun main(args: Array<String>) {
 
         val fb = Facebook()
-        val bstItr = fb.subarraySum(intArrayOf(28, 54, 7, -70, 22, 65, -6), 100)
+        val bstItr = fb.decodeString("leetcode")
+        println(bstItr)
 
 
     }

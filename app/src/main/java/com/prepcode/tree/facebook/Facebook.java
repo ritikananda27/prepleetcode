@@ -819,4 +819,195 @@ public class Facebook {
 
         return count;
     }
+
+
+    public String decodeString(String s) {
+        if(s.isEmpty()) return s;
+        return decodeUsingStack(s);
+
+    }
+
+
+    private String decodeUsingStack(String s) {
+        Stack<Integer> count = new Stack<>();
+        Stack<String> result = new Stack<>();
+
+        int i = 0;
+        while (i < s.length()) {
+            char c = s.charAt(i);
+            if (Character.isDigit(c)) {
+                int start = i;
+                while (Character.isDigit(s.charAt(i + 1))) {
+                    i++;
+                }
+                count.push(Integer.parseInt(s.substring(start, i + 1)));
+            } else if (c == '[') {
+                result.push("");
+            } else if (c == ']') {
+                String lastRes = result.pop();
+                Integer times = count.pop();
+
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < times; j++) {
+                    sb.append(lastRes);
+                }
+                if (result.isEmpty()) {
+                    result.push(sb.toString());
+                } else {
+                    result.push(result.pop() + sb.toString());
+                }
+            } else {
+                if (result.isEmpty()) {
+                    result.push(c+"");
+                }else {
+                    result.push(result.pop() + c);
+                }
+            }
+
+            i++;
+        }
+
+
+        return result.pop();
+    }
+
+    private String decodeRecursive(String s) {
+        if (!s.contains("[") && !s.contains("]")) {
+            return s;
+        }
+        int k = 0;
+        int nextNumberIndex = 0;
+        while (k < s.length()) {
+            char c = s.charAt(k);
+            if (Character.isDigit(c)) {
+                nextNumberIndex = k;
+                break;
+            }
+            k++;
+        }
+
+        int digit = Character.getNumericValue(s.charAt(nextNumberIndex));
+        String st = findNextString(s.substring(nextNumberIndex + 1));
+        StringBuilder sb = new StringBuilder();
+        sb.append(s.substring(0, nextNumberIndex));
+        for (int n = 0; n < digit; n++) {
+            sb.append(st);
+        }
+        int kk = nextNumberIndex + 2 + st.length();
+        sb.append(s.substring(kk + 1));
+        String res = decodeRecursive(sb.toString());
+        return res;
+    }
+
+    private void decodeRecursive(String s, StringBuilder sb, int j) {
+
+        if (!s.contains("[") && !s.contains("]")) {
+            return;
+        }
+
+        char c = s.charAt(j);
+        if (Character.isDigit(c)) {
+            int k = Character.getNumericValue(c);
+            String next = findNextString(s.substring(j + 1));
+            decodeRecursive(next, sb, j + 1);
+            for (int n = 0; n < k; n++) {
+                sb.append(next);
+            }
+            j = j + next.length();
+        } else {
+            sb.append(c);
+        }
+
+
+    }
+
+    private String findNextString(String s) {
+        int openIndex = 0;
+        int count = 1;
+        int i = openIndex + 1;
+        int closeIndex = 0;
+
+        while (i < s.length()) {
+            if (s.charAt(i) == '[') {
+                count++;
+            } else if (s.charAt(i) == ']') {
+                count--;
+            }
+
+            if (count == 0) {
+                closeIndex = i;
+                break;
+            }
+            i++;
+        }
+        return s.substring(openIndex + 1, closeIndex);
+    }
+
+
+    public String decodeString1(String s) {
+        ArrayDeque<String> queue = new ArrayDeque<>();
+        queue.add(s);
+        StringBuffer sb = new StringBuffer();
+
+        while (!queue.isEmpty()) {
+            String st = queue.poll();
+            if (!st.contains("[") && !st.contains("]")) {
+                sb.append(st);
+            } else {
+                List<String> immediateChildren = getImmediateChildren(st);
+                if (immediateChildren.size() > 0) {
+                    queue.addAll(immediateChildren);
+                }
+            }
+
+
+        }
+        return sb.toString();
+    }
+
+    private List<String> getImmediateChildren(String s) {
+        List<String> res = new ArrayList<>();
+
+        int i = 0;
+        while (i < s.length()) {
+            char c = s.charAt(i);
+            if (Character.isDigit(c)) {
+                int k = Character.getNumericValue(c);
+                if (s.charAt(i + 1) == '[') {
+                    int openIndex = i + 1;
+                    int closeIndex = 0;
+                    int open = 1;
+                    for (int j = i + 2; j < s.length(); j++) {
+                        if (s.charAt(j) == '[') {
+                            open++;
+                        } else if (s.charAt(j) == ']') {
+                            open--;
+                        }
+
+                        if (open == 0) {
+                            closeIndex = j;
+                            break;
+                        }
+                    }
+
+                    if (closeIndex > openIndex) {
+                        String sub = s.substring(openIndex + 1, closeIndex);
+                        for (int n = 0; n < k; n++) {
+                            res.add(sub);
+                        }
+                    }
+
+                    i = closeIndex + 1;
+                }
+
+            } else {
+                res.add(c + "");
+                i++;
+            }
+
+        }
+        return res;
+
+    }
+
 }
