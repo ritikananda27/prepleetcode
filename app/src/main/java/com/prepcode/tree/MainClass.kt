@@ -12,7 +12,7 @@ object MainClass {
     fun main(args: Array<String>) {
 
         val fb = Facebook()
-        val bstItr = fb.minWindow("this is a  atest string","tist")
+        val bstItr = fb.ladderLength2("hit", "cog", listOf("hot","dot","dog","lot","log"))
         println(bstItr)
 
 

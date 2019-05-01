@@ -1031,10 +1031,10 @@ public class Facebook {
             char c = s.charAt(i);
             if (dict.containsKey(c)) {
                 if (sMap.containsKey(c)) {
-                    if ( sMap.get(c)<dict.get(c)) {
+                    if (sMap.get(c) < dict.get(c)) {
                         count++;
                     }
-                    sMap.put(c,sMap.get(c)+1);
+                    sMap.put(c, sMap.get(c) + 1);
                 } else {
                     count++;
                     sMap.put(c, 1);
@@ -1045,11 +1045,11 @@ public class Facebook {
                     while (left < i) {
                         char cc = s.charAt(left);
                         if (!dict.containsKey(cc) || (dict.containsKey(cc) && dict.get(cc) < sMap.get(cc))) {
-                            if(sMap.containsKey(cc)) {
+                            if (sMap.containsKey(cc)) {
                                 sMap.put(cc, sMap.get(cc) - 1);
                             }
                             left++;
-                        }else {
+                        } else {
                             break;
                         }
                     }
@@ -1070,7 +1070,142 @@ public class Facebook {
         return minWindow;
     }
 
+    class Node {
 
+        Node(String value) {
+            this.value = value;
+            this.children = new ArrayList<>();
+        }
+
+        String value;
+        List<String> children;
+    }
+
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        if (wordList.isEmpty() || !wordList.contains(endWord)) {
+            return 0;
+        }
+        if (beginWord.equals(endWord)) {
+            return 1;
+        }
+        Set<String> distinct = new HashSet<>();
+        Queue<String> queue = new ArrayDeque<>();
+        queue.add(beginWord);
+        queue.add("#");
+
+        int levelCount = 1;
+        while (!queue.isEmpty()) {
+            String child = queue.poll();
+            if (child.equals("#")) {
+                levelCount++;
+                if (queue.size() > 0) {
+                    queue.add("#");
+                }
+            } else {
+
+                if (child.equals(endWord)) {
+                    return levelCount;
+                }
+                List<String> possibleChildren = getOneLetterApartChildren(child, wordList);
+
+                for (String pc : possibleChildren) {
+                    if (distinct.add(pc)) {
+                        queue.add(pc);
+                    }
+                }
+            }
+
+        }
+
+        return 0;
+    }
+
+
+    private List<String> getOneLetterApartChildren(String s, List<String> dict) {
+        List<String> children = new ArrayList<>();
+        char[] givenArr = s.toCharArray();
+        for (String word : dict) {
+
+            char[] wordArr = word.toCharArray();
+            int diff = 0;
+            for (int i = 0; i < wordArr.length; i++) {
+                if (wordArr[i] != givenArr[i]) {
+                    diff++;
+                }
+                if (diff > 1) {
+                    break;
+                }
+            }
+            if (diff == 1) {
+                children.add(word);
+            }
+
+        }
+        return children;
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public int ladderLength2(String beginWord, String endWord, List<String> wordList) {
+
+        int len = beginWord.length();
+        if (wordList.isEmpty() || !wordList.contains(endWord)) {
+            return 0;
+        }
+        if (beginWord.equals(endWord)) {
+            return 1;
+        }
+
+        Set<String> visited = new HashSet<>();
+
+        // Create the map for easy look up of one char diff words
+        Map<String, ArrayList<String>> dictMap = new HashMap<>();
+        for (String word : wordList) {
+            for (int i = 0; i < len; i++) {
+                String newWord = word.substring(0, i) + "*" + word.substring(i + 1);
+                ArrayList<String> list = dictMap.getOrDefault(newWord, new ArrayList());
+                list.add(word);
+                dictMap.put(newWord, list);
+            }
+        }
+
+        Queue<String> queue = new ArrayDeque<>();
+        visited.add(beginWord);
+        queue.add(beginWord);
+        queue.add("#");
+
+        int level = 1;
+
+        while (!queue.isEmpty()) {
+            String child = queue.poll();
+
+            if (child.equals("#")) {
+                level++;
+                if (queue.size() > 0) {
+                    queue.add("#");
+                }
+            } else {
+                if (child.equals(endWord)) {
+                    return level;
+                }
+                for (int j = 0; j < len; j++) {
+                    String w = child.substring(0, j) + "*" + child.substring(j + 1);
+                    List<String> desiredChildren = dictMap.getOrDefault(w, new ArrayList<>());
+
+                    for (String s : desiredChildren) {
+                        if (visited.add(s)) {
+                            queue.add(s);
+                        }
+                    }
+                }
+            }
+
+        }
+
+        return 0;
+
+    }
 }
+
 
 
