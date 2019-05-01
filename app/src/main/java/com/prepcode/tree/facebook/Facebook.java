@@ -822,7 +822,7 @@ public class Facebook {
 
 
     public String decodeString(String s) {
-        if(s.isEmpty()) return s;
+        if (s.isEmpty()) return s;
         return decodeUsingStack(s);
 
     }
@@ -858,8 +858,8 @@ public class Facebook {
                 }
             } else {
                 if (result.isEmpty()) {
-                    result.push(c+"");
-                }else {
+                    result.push(c + "");
+                } else {
                     result.push(result.pop() + c);
                 }
             }
@@ -1010,4 +1010,67 @@ public class Facebook {
 
     }
 
+    public String minWindow(String s, String t) {
+
+        String minWindow = null;
+        Map<Character, Integer> dict = new HashMap();
+        for (int j = 0; j < t.length(); j++) {
+            char c = t.charAt(j);
+            if (dict.containsKey(c)) {
+                dict.put(c, dict.get(c) + 1);
+            } else {
+                dict.put(c, 1);
+            }
+        }
+
+        int left = 0;
+        int count = 0;
+
+        Map<Character, Integer> sMap = new HashMap<>();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (dict.containsKey(c)) {
+                if (sMap.containsKey(c)) {
+                    if ( sMap.get(c)<dict.get(c)) {
+                        count++;
+                    }
+                    sMap.put(c,sMap.get(c)+1);
+                } else {
+                    count++;
+                    sMap.put(c, 1);
+                }
+
+                if (count == t.length()) {
+                    // try to see if the res can be trimmed
+                    while (left < i) {
+                        char cc = s.charAt(left);
+                        if (!dict.containsKey(cc) || (dict.containsKey(cc) && dict.get(cc) < sMap.get(cc))) {
+                            if(sMap.containsKey(cc)) {
+                                sMap.put(cc, sMap.get(cc) - 1);
+                            }
+                            left++;
+                        }else {
+                            break;
+                        }
+                    }
+
+                    String tempRes = s.substring(left, i + 1);
+                    if (minWindow == null) {
+                        minWindow = tempRes;
+                    } else {
+                        minWindow = minWindow.length() <= tempRes.length() ? minWindow : tempRes;
+                    }
+                }
+
+            }
+
+        }
+
+
+        return minWindow;
+    }
+
+
 }
+
+

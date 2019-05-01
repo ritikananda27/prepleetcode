@@ -12,7 +12,7 @@ object MainClass {
     fun main(args: Array<String>) {
 
         val fb = Facebook()
-        val bstItr = fb.decodeString("leetcode")
+        val bstItr = fb.minWindow("this is a  atest string","tist")
         println(bstItr)
 
 
