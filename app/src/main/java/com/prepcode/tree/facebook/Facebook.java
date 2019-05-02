@@ -1070,16 +1070,6 @@ public class Facebook {
         return minWindow;
     }
 
-    class Node {
-
-        Node(String value) {
-            this.value = value;
-            this.children = new ArrayList<>();
-        }
-
-        String value;
-        List<String> children;
-    }
 
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
         if (wordList.isEmpty() || !wordList.contains(endWord)) {
@@ -1204,6 +1194,79 @@ public class Facebook {
 
         return 0;
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public int findKthLargest(int[] nums, int k) {
+        if (k > nums.length) return -1;
+        PriorityQueue<Integer> heap = new PriorityQueue<>((n1, n2) -> n2 - n1);
+
+        for (int i = 0; i < nums.length; i++) {
+            heap.add(nums[i]);
+        }
+
+        int count = 0;
+
+        int ans = 1;
+        for (int i = 0; i <= k; i++) {
+            int v = heap.poll();
+            count++;
+            if (count == k) {
+                ans = v;
+                break;
+            }
+        }
+        return ans;
+    }
+
+    public int lengthOfLongestSubstring(String s) {
+        if (s.isEmpty()) return s.length();
+
+        int left = 0;
+        int ans = 0;
+        Set<Character> set = new HashSet<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!set.contains(c)) {
+                set.add(s.charAt(i));
+                ans = Math.max(ans, set.size());
+            } else {
+                while (set.contains(c)) {
+                    set.remove(s.charAt(left));
+                    left++;
+                }
+                set.add(c);
+            }
+
+        }
+
+        return ans;
+    }
+
+    // only right or left should move at oen time
+    private int simpleSlidingWindowWhileLoop(String s) {
+        if (s.isEmpty()) return s.length();
+
+        int left = 0;
+        int ans = 0;
+        int right = 0;
+        Set<Character> set = new HashSet<>();
+
+        while (left < s.length() && right < s.length()) {
+            char c = s.charAt(right);
+            if (!set.contains(c)) {
+                set.add(c);
+                ans = Math.max(ans, set.size());
+                right++;
+            } else {
+                set.remove(s.charAt(left));
+                left++;
+            }
+
+        }
+
+        return ans;
     }
 }
 

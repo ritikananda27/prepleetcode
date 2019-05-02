@@ -12,7 +12,7 @@ object MainClass {
     fun main(args: Array<String>) {
 
         val fb = Facebook()
-        val bstItr = fb.ladderLength2("hit", "cog", listOf("hot","dot","dog","lot","log"))
+        val bstItr = fb.lengthOfLongestSubstring("qrsvbspk" )
         println(bstItr)
 
 
