@@ -2,7 +2,6 @@ package com.prepcode.tree
 
 import android.os.Build
 import android.support.annotation.RequiresApi
-import com.prepcode.tree.facebook.Facebook
 
 object MainClass {
 
@@ -11,8 +10,8 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val fb = Facebook()
-        val bstItr = fb.lengthOfLongestSubstring("qrsvbspk" )
+        val g = Google()
+        val bstItr = g.findLaddersMinimum("hit", "cog", listOf("hot", "dot", "dog", "lot", "log", "cog"))
         println(bstItr)
 
 

@@ -1268,6 +1268,70 @@ public class Facebook {
 
         return ans;
     }
+
+
+    public int[] coinChange(int[] coins, int amount) {
+
+        Arrays.sort(coins);
+        return coinChangeBackTrackHelper(coins, amount, coins.length - 1);
+    }
+
+    private int[] coinChangeBackTrackHelper(int[] coins, int amount, int position) {
+
+        int currentCoin = coins[position];
+        if (currentCoin == amount) {
+            int[] res = new int[coins.length];
+            res[position] = 1;
+            return res;
+        }
+
+        int[] leftCase = null;
+        int[] rightCase = null;
+
+        // recurse left until it puts us over
+        if (amount >= currentCoin) {
+            leftCase = coinChangeBackTrackHelper(coins, amount - currentCoin, position);
+            if (leftCase != null) {
+                leftCase[position]++;
+            }
+        }
+
+        if (position > 0) {
+            rightCase = coinChangeBackTrackHelper(coins, amount, position - 1);
+        }
+
+        if (leftCase == null && rightCase == null) {
+            return null;
+        }
+        if (leftCase == null) {
+            return rightCase;
+        } else if (rightCase == null) {
+            return leftCase;
+        }
+
+
+        int leftSum = sumArray(leftCase);
+        int rightSum = sumArray(rightCase);
+
+        if (leftSum < rightSum) {
+            return leftCase;
+        } else {
+            return rightCase;
+        }
+
+
+    }
+
+    private int sumArray(int[] arr) {
+        int sum = 0;
+
+        for (int anArr : arr) {
+            sum += anArr;
+        }
+
+        return sum;
+    }
+
 }
 
 
