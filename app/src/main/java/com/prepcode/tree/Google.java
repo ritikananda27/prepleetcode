@@ -208,7 +208,7 @@ public class Google {
             if (map.containsKey(nw)) {
                 List<String> resList = map.get(nw);
                 for (String s : resList) {
-                    if (!set.contains(s)) {
+                    if (!set.contains(s) && !word.equals(s)) {
                         res.add(s);
                     }
                 }
@@ -217,6 +217,72 @@ public class Google {
         }
 
         return res;
+
+    }
+
+    class BFSNode {
+        String value;
+        List<BFSNode> children;
+
+        BFSNode(String val) {
+            this.value = val;
+            children = new ArrayList<>();
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public List<List<String>> findLaddersMinimumBFSDFS(String beginWord, String endWord, List<String> wordList) {
+        Map<String, List<String>> dictMap = preProcessWords(wordList);
+
+        Queue<BFSNode> queue = new ArrayDeque<>();
+        Set<String> visited = new HashSet<>();
+
+        BFSNode startNode = new BFSNode(beginWord);
+        queue.add(startNode);
+        visited.add(beginWord);
+
+        drawGraph(queue, visited, dictMap, endWord);
+
+        List<List<String>> finalRes = new ArrayList<>();
+        List<String> temp = new ArrayList<>();
+
+        ladderDFS(startNode, finalRes, temp, endWord);
+
+        return finalRes;
+    }
+
+    private void drawGraph(Queue<BFSNode> queue, Set<String> visited, Map<String, List<String>> map, String end) {
+
+        while (!queue.isEmpty()) {
+            BFSNode node = queue.poll();
+            if (node != null) {
+                List<String> children = findOneDistanceApartChildren(node.value, map, visited);
+                for (int i = 0; i < children.size(); i++) {
+                    String ch = children.get(i);
+                    if (!ch.equals(end)) {
+                        visited.add(ch);
+                    }
+                    BFSNode chNode = new BFSNode(ch);
+                    node.children.add(chNode);
+                    queue.add(chNode);
+                }
+            }
+        }
+    }
+
+    private void ladderDFS(BFSNode start, List<List<String>> finalRes, List<String> temp, String end) {
+
+        if (end.equals(start.value)) {
+            temp.add(start.value);
+            finalRes.add(new ArrayList<>(temp));
+            return;
+        }
+
+        temp.add(start.value);
+        for (BFSNode node : start.children) {
+            ladderDFS(node, finalRes, temp, end);
+            temp.remove(node.value);
+        }
 
     }
 }

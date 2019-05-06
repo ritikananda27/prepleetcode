@@ -11,7 +11,7 @@ object MainClass {
     fun main(args: Array<String>) {
 
         val g = Google()
-        val bstItr = g.findLaddersMinimum("hit", "cog", listOf("hot", "dot", "dog", "lot", "log", "cog"))
+        val bstItr = g.findLaddersMinimumBFSDFS("hit", "cog", listOf("hot", "dot", "dog", "lot", "log", "cog"))
         println(bstItr)
 
 
