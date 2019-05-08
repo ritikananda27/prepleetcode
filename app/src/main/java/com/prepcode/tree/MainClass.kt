@@ -2,6 +2,7 @@ package com.prepcode.tree
 
 import android.os.Build
 import android.support.annotation.RequiresApi
+import com.prepcode.tree.facebook.Facebook
 
 object MainClass {
 
@@ -10,10 +11,10 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val g = Google()
-        val bstItr = g.findLaddersMinimumBFSDFS("hit", "cog", listOf("hot", "dot", "dog", "lot", "log", "cog"))
-        println(bstItr)
+        val g = Facebook()
+        val bstItr = g.mergeArray(intArrayOf(4, 5, 6, -1, -1, -1), intArrayOf(2, 3, 4))
 
+        println("test")
 
     }
 

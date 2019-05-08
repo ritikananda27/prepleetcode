@@ -1332,6 +1332,62 @@ public class Facebook {
         return sum;
     }
 
+
+    public int[] moveZerosToBeginning(int[] arr) {
+
+        if (arr == null || arr.length == 0) return arr;
+        int left = 0;
+        int right = 1;
+
+        while (left < arr.length && right < arr.length) {
+
+            if (arr[right] == 0 && arr[left] != 0) {
+                int temp = arr[left];
+                arr[left] = arr[right];
+                arr[right] = temp;
+            }
+            if (arr[left] == 0) {
+                left++;
+            }
+            right++;
+        }
+
+        return arr;
+    }
+
+
+    public void mergeArray(int[] arr1, int[] arr2) {
+        int p1 = arr1.length - 1;
+        int p2 = arr2.length - 1;
+        int place = arr1.length - 1;
+
+        while (p1 >= 0 && arr1[p1] < 0) {
+            p1--;
+        }
+
+        while (p1 >= 0 || p2 >= 0) {
+            int num1 = -1;
+            int num2 = -1;
+
+            if (p1 >= 0) {
+                num1 = arr1[p1];
+            }
+            if (p2 >= 0) {
+                num2 = arr2[p2];
+            }
+
+            if (num1 > num2) {
+                arr1[place] = num1;
+                p1--;
+            } else {
+                arr1[place] = num2;
+                p2--;
+            }
+
+            place--;
+        }
+    }
+
 }
 
 
