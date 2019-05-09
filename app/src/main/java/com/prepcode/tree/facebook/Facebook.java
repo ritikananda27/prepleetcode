@@ -755,16 +755,19 @@ public class Facebook {
         public TreeNode getBST() {
             TreeNode n4 = new TreeNode(4);
             TreeNode n2 = new TreeNode(2);
-            TreeNode n7 = new TreeNode(7);
+            TreeNode n5 = new TreeNode(5);
             TreeNode n1 = new TreeNode(1);
             TreeNode n3 = new TreeNode(3);
+            TreeNode n6 = new TreeNode(6);
 
-            n4.left = n2;
-            n4.right = n7;
-            n2.left = n1;
-            n2.right = n3;
+            n1.left = n2;
+            n1.right = n5;
+            n2.left = n3;
+            n2.right = n4;
+            n5.right = n6;
 
-            return n4;
+
+            return n1;
         }
     }
 
@@ -1386,6 +1389,153 @@ public class Facebook {
 
             place--;
         }
+    }
+
+    public TreeNode sortedArrayToBST(int[] nums) {
+        if (nums.length == 0) {
+            return null;
+        }
+        return helper(nums, 0, nums.length - 1);
+    }
+
+    private TreeNode helper(int[] nums, int start, int end) {
+        if (start > end) {
+            return null;
+        }
+
+        int middle = (start + end) / 2;
+        TreeNode root = new TreeNode(nums[middle]);
+        root.left = helper(nums, start, middle - 1);
+        root.right = helper(nums, middle + 1, end);
+        return root;
+    }
+
+    public void flatten(TreeNode root) {
+        if (root == null) return;
+
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+
+        root.left = null;
+        flatten(left);
+        flatten(right);
+
+        root.right = left;
+
+        TreeNode curr = root;
+
+        while (curr.right != null) {
+            curr = curr.right;
+        }
+
+        curr.right = right;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public int firstUniqChar(String s) {
+
+        if (s.isEmpty()) return -1;
+
+        Map<Character, Integer> map = new HashMap<>();
+
+        for (char c : s.toCharArray()) {
+            int val = map.getOrDefault(c, 0);
+            map.put(c, val + 1);
+        }
+
+        int ans = -1;
+        for (char c : s.toCharArray()) {
+            if (map.getOrDefault(c, 0) == 1) {
+                ans = s.indexOf(c);
+                break;
+            }
+        }
+
+        return ans;
+
+    }
+
+    public int[] sortedSquares(int[] A) {
+
+        int[] res = new int[A.length];
+        int left = 0;
+        int right = A.length - 1;
+        int place = res.length - 1;
+
+        while (left <= right) {
+            int num1 = Math.abs(A[left]);
+            int num2 = Math.abs(A[right]);
+
+            if (num1 > num2) {
+                res[place] = num1 * num1;
+                left++;
+            } else {
+                res[place] = num2 * num2;
+                right--;
+            }
+            place--;
+
+        }
+        return res;
+    }
+
+
+    public String tree2str(TreeNode t) {
+        if (t == null) {
+            return "";
+        }
+
+        if (t.left == null && t.right == null) {
+            return t + "";
+        }
+
+        if (t.right == null) {
+            return t.val + "(" + t.left.val + ")";
+        }
+
+        return t.val + "(" + tree2str(t.left) + ") (" + tree2str(t.right) + ")";
+    }
+
+
+    public int maxProfit(int[] prices) {
+        if (prices.length == 0) return 0;
+
+        int minPrice = prices[0];
+        int maxProfit = 0;
+
+        for (int i = 1; i < prices.length; i++) {
+
+            if (prices[i] < minPrice) {
+                minPrice = prices[i];
+            } else if ((prices[i] - minPrice) > maxProfit) {
+                maxProfit = prices[i] - minPrice;
+            }
+        }
+
+        return maxProfit;
+    }
+
+    public int maxProfit2(int[] prices) {
+
+        if (prices.length == 0) return 0;
+        int minPrice = prices[0];
+        int profit = 0;
+
+        for (int i = 1; i < prices.length; i++) {
+            int p = prices[i];
+
+            if (p < minPrice) {
+                minPrice = p;
+            } else {
+
+                profit = profit + (p - minPrice);
+                minPrice = p;
+
+            }
+        }
+
+        return profit;
+
     }
 
 }

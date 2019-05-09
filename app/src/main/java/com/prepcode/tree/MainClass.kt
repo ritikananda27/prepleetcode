@@ -12,7 +12,7 @@ object MainClass {
     fun main(args: Array<String>) {
 
         val g = Facebook()
-        val bstItr = g.mergeArray(intArrayOf(4, 5, 6, -1, -1, -1), intArrayOf(2, 3, 4))
+        val bstItr = g.flatten(g.Tree().bst)
 
         println("test")
 
