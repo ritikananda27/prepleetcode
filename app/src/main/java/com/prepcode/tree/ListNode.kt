@@ -1,6 +1,8 @@
 package com.prepcode.tree
 
-data class ListNode(val value: Int, var next: ListNode?)
+data class ListNode(val value: Int, var next: ListNode?) {
+    constructor(vall: Int) : this(vall, null)
+}
 
 class ListNodeHelper() {
 

@@ -2,7 +2,6 @@ package com.prepcode.tree
 
 import android.os.Build
 import android.support.annotation.RequiresApi
-import com.prepcode.tree.facebook.Facebook
 
 object MainClass {
 
@@ -11,10 +10,14 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val g = Facebook()
-        val bstItr = g.flatten(g.Tree().bst)
+        val u = Uber()
 
-        println("test")
+        val list = ArrayList<List<String>>()
+
+
+        val subArraySum = u.subsets(intArrayOf(1, 2, 3))
+        println(subArraySum)
+
 
     }
 

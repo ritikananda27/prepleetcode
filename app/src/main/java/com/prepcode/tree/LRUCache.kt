@@ -91,7 +91,7 @@ class LRUCache(private val capacity: Int) {
 
         private var head: Node? = null
         private var tail: Node? = null
-        private val map: HashMap<Int, Node>
+        private val ticketsMap: HashMap<Int, Node>
 
         private inner class Node internal constructor(internal var key: Int, internal var value: Int) {
             internal var prev: Node? = null
@@ -101,17 +101,17 @@ class LRUCache(private val capacity: Int) {
         }
 
         init {
-            this.map = HashMap()
+            this.ticketsMap = HashMap()
         }
 
 
         operator fun get(key: Int): Int {
 
-            if (!map.containsKey(key)) {
+            if (!ticketsMap.containsKey(key)) {
                 return -1
             }
 
-            val n = map[key]
+            val n = ticketsMap[key]
             removeFromQueue(n)
             setHead(n)
 
@@ -121,20 +121,20 @@ class LRUCache(private val capacity: Int) {
 
         fun put(key: Int, value: Int) {
 
-            if (map.containsKey(key)) {
-                val n = map[key]
+            if (ticketsMap.containsKey(key)) {
+                val n = ticketsMap[key]
                 n.value = value
                 removeFromQueue(n)
                 setHead(n)
             } else {
-                if (map.size >= capacity) {
-                    map.remove(tail!!.key)
+                if (ticketsMap.size >= capacity) {
+                    ticketsMap.remove(tail!!.key)
                     removeFromQueue(tail!!)
 
                 }
                 val n = Node(key, value)
                 setHead(n)
-                map[key] = n
+                ticketsMap[key] = n
             }
         }
 
