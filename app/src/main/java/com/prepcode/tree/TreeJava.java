@@ -1,10 +1,6 @@
 package com.prepcode.tree;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class TreeJava {
 
@@ -133,6 +129,7 @@ public class TreeJava {
 
     }
 
+    /*Deapth first way */
     /*Serialize and Deserialize a tree */
 
     public String serialize(TreeNode root) {
@@ -164,10 +161,10 @@ public class TreeJava {
             dataList.add(data.charAt(i));
         }
 
-        return desertializeImpl(0, dataList);
+        return desertializeImpl(dataList);
     }
 
-    private TreeNode desertializeImpl(int pointer, List<Character> data) {
+    private TreeNode desertializeImpl(List<Character> data) {
         if (data.size() == 0) return null;
         char val = data.get(0);
         data.remove(0);
@@ -175,8 +172,8 @@ public class TreeJava {
             return null;
         }
         TreeNode head = new TreeNode(Integer.parseInt(Character.toString(val)));
-        head.setLeft(desertializeImpl(pointer + 1, data));
-        head.setRight(desertializeImpl(pointer + 1, data));
+        head.setLeft(desertializeImpl(data));
+        head.setRight(desertializeImpl(data));
 
 
         return head;
@@ -186,13 +183,13 @@ public class TreeJava {
     public double myPow(double x, int n) {
         int sign;
         if (n < 0) {
-            sign =0;
+            sign = 0;
         } else {
-            sign =1;
+            sign = 1;
         }
 
         double res = 1.0;
-        for (int count=0; count<n;count++) {
+        for (int count = 0; count < n; count++) {
             res *= x;
         }
 

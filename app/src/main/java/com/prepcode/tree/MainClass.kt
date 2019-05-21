@@ -10,13 +10,20 @@ object MainClass {
     @JvmStatic
     fun main(args: Array<String>) {
 
-        val u = Uber()
 
-        val list = ArrayList<List<String>>()
+        /*[[0,-12],[5,2],[2,5],[0,-5],[1,5],[2,-2],[5,-4],[3,4],[-2,4],[-1,4],[0,-5],[0,-8],[-2,-1],[0,-11],[0,-9]]*/
+        val u = LinkedIn()
 
+        val s = u.MaxStack()
+        s.push(5)
+        s.push(1)
+        s.push(-5)
 
-        val subArraySum = u.subsets(intArrayOf(1, 2, 3))
-        println(subArraySum)
+        val x = s.popMax()
+        val y = s.popMax()
+        val h = s.top()
+
+        println("test")
 
 
     }

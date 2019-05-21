@@ -635,4 +635,28 @@ public class Uber {
         return res;
     }
 
+    public int findMinimum(int[] arr) {
+        if (arr.length == 1) {
+            return arr[0];
+        }
+        return minHelper(arr, 0, arr.length - 1);
+    }
+
+    public int minHelper(int[] arr, int low, int high) {
+        if (low >= high) {
+            return arr[low];
+        }
+
+        int mid = (low + high) / 2;
+
+        if (arr[mid] >= arr[high]) {
+            return minHelper(arr, mid + 1, high);
+        } else {
+            return minHelper(arr, low, mid);
+        }
+
+
+    }
+
+
 }
