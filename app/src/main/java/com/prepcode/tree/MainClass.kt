@@ -11,17 +11,21 @@ object MainClass {
     fun main(args: Array<String>) {
 
 
-        /*[[0,-12],[5,2],[2,5],[0,-5],[1,5],[2,-2],[5,-4],[3,4],[-2,4],[-1,4],[0,-5],[0,-8],[-2,-1],[0,-11],[0,-9]]*/
         val u = LinkedIn()
 
-        val s = u.MaxStack()
-        s.push(5)
-        s.push(1)
-        s.push(-5)
+        val tn1 = u.TreeNode(1)
+        val tn2 = u.TreeNode(2)
+        val tn3 = u.TreeNode(3)
+        val tn4 = u.TreeNode(4)
+        val tn5 = u.TreeNode(5)
 
-        val x = s.popMax()
-        val y = s.popMax()
-        val h = s.top()
+
+        tn1.left = tn2
+        tn1.right = tn3
+        tn2.left = tn4
+        tn2.right = tn5
+
+        val s = u.countSubstrings("abc")
 
         println("test")
 
