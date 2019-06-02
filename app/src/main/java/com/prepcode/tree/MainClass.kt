@@ -11,21 +11,34 @@ object MainClass {
     fun main(args: Array<String>) {
 
 
-        val u = LinkedIn()
+        val lin = LinkedInNew()
 
-        val tn1 = u.TreeNode(1)
-        val tn2 = u.TreeNode(2)
-        val tn3 = u.TreeNode(3)
-        val tn4 = u.TreeNode(4)
-        val tn5 = u.TreeNode(5)
+        val tn1 = lin.ListNode(1)
+        val tn4 = lin.ListNode(4)
+        val tn5 = lin.ListNode(5)
+        tn1.next = tn4
+        tn4.next = tn5
 
 
-        tn1.left = tn2
-        tn1.right = tn3
-        tn2.left = tn4
-        tn2.right = tn5
+        val tn11 = lin.ListNode(1)
+        val tn3 = lin.ListNode(4)
+        val tn44 = lin.ListNode(4)
+        tn11.next = tn3
+        tn3.next = tn44
 
-        val s = u.countSubstrings("abc")
+        val tn2 = lin.ListNode(2)
+        val tn6 = lin.ListNode(6)
+        tn2.next = tn6
+
+
+        val arr = Array(4) { IntArray(2) }
+        arr[0] = intArrayOf(1, 3)
+        arr[1] = intArrayOf(2, 6)
+        arr[2] = intArrayOf(8, 10)
+        arr[3] = intArrayOf(15, 18)
+
+
+        val s = lin.serialize(lin.Tree().bst)
 
         println("test")
 
