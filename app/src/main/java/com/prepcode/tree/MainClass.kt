@@ -38,7 +38,7 @@ object MainClass {
         arr[3] = intArrayOf(15, 18)
 
 
-        val s = lin.serialize(lin.Tree().bst)
+        val s = lin.search(intArrayOf(4, 5, 6, 7, 0, 1, 2), 3)
 
         println("test")
 

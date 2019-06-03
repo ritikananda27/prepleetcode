@@ -5,6 +5,58 @@ import java.util.*;
 public class LinkedInNew {
 
 
+    public int search(int[] nums, int target) {
+        if (nums.length == 0) return -1;
+        int minEleIndex = 0;
+        int low = 0;
+        int high = nums.length - 1;
+        if (nums[low] < nums[high]) {
+            minEleIndex = 0;
+        } else {
+            while (low <= high) {
+                int mid = (low + high) / 2;
+                if (nums[mid] > nums[mid + 1]) {
+                    minEleIndex = mid + 1;
+                    break;
+                }
+                if (nums[mid] > nums[high]) {
+                    low = mid;
+                } else {
+                    high = mid - 1;
+                }
+            }
+        }
+
+        int serachStartIndex;
+        int searchEndINdex;
+
+        if (target > nums[0]) {
+            serachStartIndex = 0;
+            searchEndINdex = minEleIndex;
+        } else {
+            serachStartIndex = minEleIndex;
+            searchEndINdex = nums.length - 1;
+        }
+
+        int resIndex = -1;
+
+        while (serachStartIndex <= searchEndINdex) {
+            int miid = (searchEndINdex + searchEndINdex) / 2;
+            if (nums[miid] == target) {
+                resIndex = miid;
+                break;
+            }
+            if (target > nums[miid]) {
+                searchEndINdex = miid + 1;
+            } else {
+                searchEndINdex = miid - 1;
+            }
+        }
+
+
+        return resIndex;
+    }
+
     public int[] productExceptSelf(int[] nums) {
         int[] res = new int[nums.length];
         if (nums.length == 0) return res;
