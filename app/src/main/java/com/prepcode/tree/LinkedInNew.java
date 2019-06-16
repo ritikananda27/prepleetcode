@@ -1,9 +1,68 @@
 package com.prepcode.tree;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import java.util.*;
 
 public class LinkedInNew {
 
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public String minWindow(String s, String t) {
+        String answer = "";
+
+        Map<Character, Integer> tCountMap = new HashMap<>();
+        for (Character c : t.toCharArray()) {
+            int count = tCountMap.getOrDefault(c, 0);
+            count = count + 1;
+            tCountMap.put(c, count);
+        }
+
+        int foundChars = 0;
+        Map<Character, Integer> sCountMap = new HashMap<>();
+        char[] sArr = s.toCharArray();
+        int left = 0;
+        for (int i = 0; i < sArr.length; i++) {
+            char cc = sArr[i];
+            // try to cover all the letters in s first
+            if (tCountMap.containsKey(cc)) {
+
+                if (!sCountMap.containsKey(cc) || sCountMap.get(cc) < tCountMap.get(cc)) {
+                    foundChars++;
+                }
+                int count = sCountMap.getOrDefault(cc, 0);
+                count++;
+                sCountMap.put(cc, count);
+
+                if (foundChars == t.length()) {
+                    // window found
+                    // try to minimize from left
+
+                    while (left < i) {
+                        char leftChar = s.charAt(left);
+                        if (!tCountMap.containsKey(leftChar) || sCountMap.get(leftChar) > tCountMap.get(leftChar)) {
+                            if (sCountMap.containsKey(leftChar)) {
+                                sCountMap.put(leftChar, sCountMap.get(leftChar) - 1);
+                            }
+                            left++;
+                        } else {
+                            break;
+                        }
+                    }
+
+
+                    String subStr = s.substring(left, i + 1);
+                    if (answer.isEmpty() || subStr.length() < answer.length()) {
+                        answer = subStr;
+                    }
+                }
+            }
+        }
+
+        return answer;
+
+    }
 
     public int search(int[] nums, int target) {
         if (nums.length == 0) return -1;

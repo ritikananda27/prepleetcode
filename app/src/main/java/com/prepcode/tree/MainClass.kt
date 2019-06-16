@@ -11,35 +11,17 @@ object MainClass {
     fun main(args: Array<String>) {
 
 
-        val lin = LinkedInNew()
+        val googleFinal = GoogleFinal()
 
-        val tn1 = lin.ListNode(1)
-        val tn4 = lin.ListNode(4)
-        val tn5 = lin.ListNode(5)
-        tn1.next = tn4
-        tn4.next = tn5
+        val matrix = arrayOf(
+            intArrayOf(1, 4, 7, 11, 15),
+            intArrayOf(2, 5, 8, 12, 19),
+            intArrayOf(3, 6, 9, 16, 22),
+            intArrayOf(10, 13, 14, 17, 24),
+            intArrayOf(18, 21, 23, 26, 30)
+        )
 
-
-        val tn11 = lin.ListNode(1)
-        val tn3 = lin.ListNode(4)
-        val tn44 = lin.ListNode(4)
-        tn11.next = tn3
-        tn3.next = tn44
-
-        val tn2 = lin.ListNode(2)
-        val tn6 = lin.ListNode(6)
-        tn2.next = tn6
-
-
-        val arr = Array(4) { IntArray(2) }
-        arr[0] = intArrayOf(1, 3)
-        arr[1] = intArrayOf(2, 6)
-        arr[2] = intArrayOf(8, 10)
-        arr[3] = intArrayOf(15, 18)
-
-
-        val s = lin.search(intArrayOf(4, 5, 6, 7, 0, 1, 2), 3)
-
+        val test = googleFinal.summaryRanges(intArrayOf(0,2,3,4,6,8,9))
         println("test")
 
 
