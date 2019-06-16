@@ -8,6 +8,98 @@ import java.util.*;
 public class GoogleFinal {
 
 
+    class LRUCache {
+
+        int capacity;
+        Node head;
+        Node tail;
+
+        Map<Integer, Node> map = new HashMap<>();
+
+
+        class Node {
+            int val;
+            Node prev;
+            Node next;
+
+            Node(int val) {
+                this.val = val;
+                this.next = null;
+                this.prev = null;
+            }
+        }
+
+        public LRUCache(int capacity) {
+            this.capacity = capacity;
+        }
+
+        public int get(int key) {
+            if (map.containsKey(key)) {
+                Node node = map.get(key);
+                refreshQueue(node);
+                return node.val;
+            } else {
+                return -1;
+            }
+        }
+
+        public void put(int key, int value) {
+            if (map.containsKey(key)) {
+                Node node = map.get(key);
+                node.val = value;
+                map.put(key, node);
+                refreshQueue(node);
+            } else {
+                if (map.size() >= capacity) {
+                    removeNodeFromQueue();
+                }
+                Node newNode = new Node(value);
+                addNodeToQueue(newNode);
+                map.put(key, newNode);
+            }
+
+
+        }
+
+        private void refreshQueue(Node node) {
+            // Remove from the existing queue
+
+            //checking if node is the head and then removing
+            if (node.next == null) {
+                head = node.prev;
+            }
+
+            // checking if the node is a tail and then removing if true
+            else if (node.prev == null) {
+                tail = node.next;
+            } else {
+                node.prev.next = node.next;
+                node.next.prev = node.prev;
+            }
+
+            // add the node back to the queue
+            addNodeToQueue(node);
+        }
+
+        private void addNodeToQueue(Node node) {
+            if (head == null) {
+                head = node;
+                tail = head;
+            } else {
+                node.next = tail;
+                tail.prev = node;
+                tail = node;
+            }
+        }
+
+        private void removeNodeFromQueue() {
+            if (tail != null) {
+                tail = tail.next;
+            }
+
+        }
+    }
+
     public List<String> summaryRanges(int[] nums) {
         List<String> res = new ArrayList<>();
         if (nums.length == 0) return res;
